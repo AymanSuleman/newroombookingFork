@@ -9,6 +9,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background, // use your background color
       appBar: AppBar(
+         automaticallyImplyLeading: false,
         backgroundColor: Colors.white.withOpacity(0.8),
         elevation: 0,
         centerTitle: true,

@@ -43,6 +43,7 @@ class FavoritesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+         automaticallyImplyLeading: false,
         backgroundColor: Colors.white.withOpacity(0.8),
         elevation: 0,
         title: const Text("Favorites"),

@@ -10,6 +10,7 @@ class SignInScreen extends StatelessWidget {
     const primaryColor = Color(0xFF1193D4);
 
     return Scaffold(
+      
       backgroundColor: const Color(0xFFF9FAFB), // bg-gray-50
       body: SafeArea(
         child: SingleChildScrollView(
@@ -18,25 +19,25 @@ class SignInScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Back button
-              Container(
-                margin: const EdgeInsets.only(bottom: 32),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(50),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 4,
-                      spreadRadius: 1,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black87),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ),
+              // Container(
+              //   margin: const EdgeInsets.only(bottom: 32),
+              //   decoration: BoxDecoration(
+              //     color: Colors.white,
+              //     borderRadius: BorderRadius.circular(50),
+              //     boxShadow: [
+              //       BoxShadow(
+              //         color: Colors.black12,
+              //         blurRadius: 4,
+              //         spreadRadius: 1,
+              //         offset: const Offset(0, 2),
+              //       ),
+              //     ],
+              //   ),
+              //   child: IconButton(
+              //     icon: const Icon(Icons.arrow_back, color: Colors.black87),
+              //     onPressed: () => Navigator.pop(context),
+              //   ),
+              // ),
 
               // Title
               const Text(

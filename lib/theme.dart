@@ -33,8 +33,8 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color primary = Color(0xFF1193d4);
-  static const Color primary2 = Colors.blue;
+  static const Color primary = Color.fromARGB(255, 13, 115, 165);
+  static const Color primary2 = Color.fromARGB(255, 3, 104, 186);
   static const Color normaltext = Colors.black; // gray-50
 
   static const Color background = Color(0xFFF9FAFB); // gray-50
@@ -50,6 +50,7 @@ class AppColors {
 }
 
 class AppTheme {
+  
   static ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: AppColors.background,
     primaryColor: AppColors.primary,

@@ -200,6 +200,7 @@ class HistoryScreen extends StatelessWidget {
     return Scaffold(
       // backgroundColor: Colors.grey[50],
       appBar: AppBar(
+         automaticallyImplyLeading: false,
         backgroundColor: Colors.white.withOpacity(0.8),
         elevation: 0,
         title: const Text("History"),
