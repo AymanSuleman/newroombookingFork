@@ -130,6 +130,7 @@
 import 'package:flutter/material.dart';
 import 'package:newroombooking/RoomDetailsPage.dart';
 import 'package:newroombooking/SignUpScreen.dart';
+import 'package:newroombooking/VerifyPhoneNumber.dart';
 import 'package:newroombooking/home.dart';
 import 'theme.dart';
 // import 'home_screen.dart';
@@ -146,8 +147,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Find your stay",
       theme: AppTheme.lightTheme,
-      home: SignUpScreen(),
-      // home: RoomDetailsPage(),
+      // home: SignUpScreen(),
+      home: VerifyPhoneScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -330,7 +330,7 @@ class DateSelectionBottomSheet {
                   CalendarDatePicker2(
                     config: CalendarDatePicker2Config(
                       calendarType: CalendarDatePicker2Type.range,
-                      selectedDayHighlightColor: Colors.blue,
+                      selectedDayHighlightColor: AppColors.primary2,
                       weekdayLabels: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
                       firstDayOfWeek: 0,
                     ),

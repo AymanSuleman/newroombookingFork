@@ -566,7 +566,6 @@
 //   }
 // }
 
-
 // ---------------------------new code ----------------------------------//
 // import 'package:flutter/material.dart';
 // import 'package:newroombooking/HistoryScreen.dart';
@@ -930,9 +929,6 @@
 // //   }
 // // }
 
-
-
-
 //------------------search abr code-------------------//
 import 'package:flutter/material.dart';
 import 'package:newroombooking/HistoryScreen.dart';
@@ -975,13 +971,40 @@ class _MainScreenState extends State<MainScreen> {
             _currentIndex = index;
           });
         },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+        items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border), label: "Favorite"),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: "History"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+            icon: _buildNavIcon(Icons.home, 0),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: _buildNavIcon(Icons.favorite_border, 1),
+            label: "Favorite",
+          ),
+          BottomNavigationBarItem(
+            icon: _buildNavIcon(Icons.history, 2),
+            label: "History",
+          ),
+          BottomNavigationBarItem(
+            icon: _buildNavIcon(Icons.person, 3),
+            label: "Profile",
+          ),
         ],
+      ),
+    );
+  }
+
+  /// Custom builder for nav icons
+  Widget _buildNavIcon(IconData icon, int index) {
+    final bool isSelected = _currentIndex == index;
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: isSelected ? AppColors.primary2 : Colors.transparent,
+        shape: BoxShape.circle, // 👈 Circle shape
+      ),
+      child: Icon(
+        icon,
+        color: isSelected ? Colors.white : Colors.grey,
       ),
     );
   }
@@ -1055,7 +1078,9 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
               (selectedCategory == "All" ||
                   hotel["category"] == selectedCategory) &&
               (hotel["title"].toLowerCase().contains(query.toLowerCase()) ||
-                  hotel["subtitle"].toLowerCase().contains(query.toLowerCase())))
+                  hotel["subtitle"]
+                      .toLowerCase()
+                      .contains(query.toLowerCase())))
           .toList();
     });
   }
@@ -1140,7 +1165,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
 
               // Categories
               SizedBox(
-                height: 70,
+                height: 50,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -1326,19 +1351,27 @@ class CategoryTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.only(right: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      child: Container(
+        margin: const EdgeInsets.only(right: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.primary2 : Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(20), // 👈 Rounded shape
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon,
-                color: selected ? AppColors.primary2 : AppColors.textLight),
-            const SizedBox(height: 4),
+            Icon(
+              icon,
+              size: 20,
+              color: selected ? Colors.white : Colors.black87,
+            ),
+            const SizedBox(width: 6),
             Text(
               label,
               style: TextStyle(
+                color: selected ? Colors.white : Colors.black87,
                 fontWeight: selected ? FontWeight.bold : FontWeight.normal,
-                color: selected ? AppColors.primary2 : AppColors.textLight,
               ),
             ),
           ],

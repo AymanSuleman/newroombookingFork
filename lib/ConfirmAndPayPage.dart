@@ -7,7 +7,7 @@ class ConfirmAndPayPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const primaryColor = Color(0xFF1193D4);
+    // const AppColors.primary2 = Color(0xFF1193D4);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC), // bg-slate-50
@@ -100,9 +100,9 @@ class ConfirmAndPayPage extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
-            _buildRowWithEdit("Dates", "Mar 15 – 20", primaryColor),
+            _buildRowWithEdit("Dates", "Mar 15 – 20", AppColors.primary2),
             const SizedBox(height: 12),
-            _buildRowWithEdit("Guests", "2 guests", primaryColor),
+            _buildRowWithEdit("Guests", "2 guests", AppColors.primary2),
 
             const Divider(height: 32),
 
@@ -145,13 +145,20 @@ class ConfirmAndPayPage extends StatelessWidget {
                 const Text("•••• 1234",
                     style: TextStyle(fontSize: 16, color: Colors.black87)),
                 const Spacer(),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Edit",
-                    style: TextStyle(
-                      color: primaryColor,
-                      fontWeight: FontWeight.w600,
+                Container(
+                  height: 35,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary2,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Edit",
+                      style: TextStyle(
+                        color: AppColors.container,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
@@ -176,7 +183,7 @@ class ConfirmAndPayPage extends StatelessWidget {
                   TextSpan(
                     text: "Learn more",
                     style: TextStyle(
-                      color: primaryColor,
+                      color: AppColors.primary2,
                       fontWeight: FontWeight.w500,
                       decoration: TextDecoration.underline,
                     ),
@@ -246,7 +253,7 @@ class ConfirmAndPayPage extends StatelessWidget {
     );
   }
 
-  Widget _buildRowWithEdit(String label, String value, Color primaryColor) {
+  Widget _buildRowWithEdit(String label, String value, Color primary2) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -263,13 +270,20 @@ class ConfirmAndPayPage extends StatelessWidget {
                 style: const TextStyle(fontSize: 13, color: Colors.grey)),
           ],
         ),
-        TextButton(
-          onPressed: () {},
-          child: Text(
-            "Edit",
-            style: TextStyle(
-              color: primaryColor,
-              fontWeight: FontWeight.w600,
+        Container(
+          height: 35,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            color: primary2,
+          ),
+          child: TextButton(
+            onPressed: () {},
+            child: Text(
+              "Edit",
+              style: TextStyle(
+                color: AppColors.container,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ),

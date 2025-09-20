@@ -7,7 +7,7 @@ class BookingConfirmationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const primaryColor = Color(0xFF1193D4);
+    // const primaryColor = AppColors.primary2;
 
     return Scaffold(
         backgroundColor: const Color(0xFFF8FAFC),
@@ -37,11 +37,10 @@ class BookingConfirmationPage extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.green.shade100,
+                  color: AppColors.primary2,
                   shape: BoxShape.circle,
                 ),
-                child:
-                    Icon(Icons.check, size: 40, color: Colors.green.shade700),
+                child: Icon(Icons.check, size: 40, color: AppColors.container),
               ),
               const SizedBox(height: 16),
               const Text(
@@ -79,33 +78,33 @@ class BookingConfirmationPage extends StatelessWidget {
                     const Text(
                       "Booking Details",
                       style: TextStyle(
-                          color: Color(0xFF0D171B),
+                          color: AppColors.primary2,
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 16),
                     _buildDetailItem(Icons.hotel, "Hotel",
-                        "The Grand Majestic Hotel", primaryColor),
+                        "The Grand Majestic Hotel", AppColors.primary2),
                     const SizedBox(height: 12),
                     Row(
                       children: [
                         Expanded(
                           child: _buildDetailItem(Icons.calendar_month,
-                              "Check-in", "Fri, Jul 12", primaryColor),
+                              "Check-in", "Fri, Jul 12", AppColors.primary2),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
                           child: _buildDetailItem(Icons.calendar_month,
-                              "Check-out", "Sun, Jul 14", primaryColor),
+                              "Check-out", "Sun, Jul 14", AppColors.primary2),
                         ),
                       ],
                     ),
                     const SizedBox(height: 12),
                     _buildDetailItem(Icons.bed, "Room Type",
-                        "Deluxe Double Room", primaryColor),
+                        "Deluxe Double Room", AppColors.text),
                     const SizedBox(height: 12),
                     _buildDetailItem(
-                        Icons.group, "Guests", "2 Adults", primaryColor),
+                        Icons.group, "Guests", "2 Adults", AppColors.text),
                     const Divider(height: 32),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -164,30 +163,9 @@ class BookingConfirmationPage extends StatelessWidget {
           ),
         ]));
   }
-  //     // Bottom Nav Bar
-  //     Container(
-  //       decoration: const BoxDecoration(
-  //         border: Border(top: BorderSide(color: Colors.black12)),
-  //         color: Colors.white,
-  //       ),
-  //       padding: const EdgeInsets.symmetric(vertical: 10),
-  //       child: Row(
-  //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //         children: [
-  //           _bottomNavItem(Icons.search, "Explore", false, primaryColor),
-  //           _bottomNavItem(Icons.bookmark, "Bookings", true, primaryColor),
-  //           _bottomNavItem(Icons.inbox, "Inbox", false, primaryColor),
-  //           _bottomNavItem(Icons.person, "Profile", false, primaryColor),
-  //         ],
-  //       ),
-  //     ),
-  //   ],
-  // ),
-  //   );
-  // }
 
   Widget _buildDetailItem(
-      IconData icon, String label, String value, Color primaryColor) {
+      IconData icon, String label, String value, Color AppColorsprimary2) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -195,10 +173,10 @@ class BookingConfirmationPage extends StatelessWidget {
           height: 48,
           width: 48,
           decoration: BoxDecoration(
-            color: Colors.blue.shade50,
+            color: AppColors.primary2,
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Icon(icon, color: primaryColor),
+          child: Icon(icon, color: AppColors.container),
         ),
         const SizedBox(width: 12),
         Column(

@@ -150,6 +150,7 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import 'package:newroombooking/RoomDetailsPage.dart';
 import 'package:newroombooking/theme.dart';
 // import 'theme.dart';
 
@@ -200,7 +201,7 @@ class HistoryScreen extends StatelessWidget {
     return Scaffold(
       // backgroundColor: Colors.grey[50],
       appBar: AppBar(
-         automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white.withOpacity(0.8),
         elevation: 0,
         title: const Text("History"),
@@ -307,17 +308,27 @@ class HistoryScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(12.0),
                   child: TextButton(
                     style: TextButton.styleFrom(
-                      backgroundColor: Colors.grey[200],
+                      backgroundColor: AppColors.primary2,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 6),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RoomDetailsPage(
+                            hotel: {},
+                          ),
+                        ),
+                      );
+                    },
                     child: const Text(
                       "View Details",
-                      style: TextStyle(color: Colors.black, fontSize: 12),
+                      style:
+                          TextStyle(color: AppColors.container, fontSize: 12),
                     ),
                   ),
                 ),

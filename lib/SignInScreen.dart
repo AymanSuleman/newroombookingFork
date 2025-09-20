@@ -7,10 +7,9 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const primaryColor = Color(0xFF1193D4);
+    // const primaryColor = Color(0xFF1193D4);
 
     return Scaffold(
-      
       backgroundColor: const Color(0xFFF9FAFB), // bg-gray-50
       body: SafeArea(
         child: SingleChildScrollView(
@@ -73,7 +72,7 @@ class SignInScreen extends StatelessWidget {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
-                    borderSide: const BorderSide(color: primaryColor),
+                    borderSide: const BorderSide(color: AppColors.primary2),
                   ),
                 ),
               ),
@@ -188,7 +187,7 @@ class SignInScreen extends StatelessWidget {
                       TextSpan(
                         text: "Sign up",
                         style: const TextStyle(
-                          color: primaryColor,
+                          color: AppColors.primary2,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

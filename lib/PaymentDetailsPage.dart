@@ -101,19 +101,19 @@ class PaymentDetailsPage extends StatelessWidget {
               ),
               const SizedBox(height: 12),
 
-              ElevatedButton.icon(
+              OutlinedButton.icon(
                 onPressed: () {
                   // Navigator.push(
                   //     context,
                   //     MaterialPageRoute(
                   //         builder: (context) => PaymentDetailsPage()));
                 },
-                icon: const Icon(Icons.apple, size: 24, color: Colors.white),
+                icon: const Icon(Icons.apple, size: 24, color: Colors.black),
                 label: const Text("Pay with Apple Pay",
-                    style: TextStyle(color: Colors.white)),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
+                    style: TextStyle(color: Colors.black)),
+                style: OutlinedButton.styleFrom(
                   minimumSize: const Size(double.infinity, 56),
+                  side: const BorderSide(color: Color(0xFFD1D5DB)), // slate-300
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),

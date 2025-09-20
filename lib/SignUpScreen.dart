@@ -321,7 +321,7 @@ class SignUpScreen extends StatelessWidget {
                           TextSpan(
                             text: 'Terms and Conditions',
                             style: const TextStyle(
-                                color: Color(0xFF1D4ED8),
+                                color: AppColors.primary2,
                                 fontWeight: FontWeight.w500),
                           ),
                         ],
@@ -402,7 +402,7 @@ class SignUpScreen extends StatelessWidget {
                       TextSpan(
                         text: 'Sign In',
                         style: TextStyle(
-                            color: Color(0xFF1D4ED8),
+                            color: AppColors.primary2,
                             fontWeight: FontWeight.bold),
                       ),
                     ],
