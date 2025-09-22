@@ -950,7 +950,9 @@ class _MainScreenState extends State<MainScreen> {
 
   // Screens for bottom navigation
   final List<Widget> _screens = [
-    const HomeScreenBody(),
+    const HomeScreenBody(
+      location: '',
+    ),
     const FavoritesScreen(),
     const HistoryScreen(),
     const ProfileScreen(),
@@ -1013,7 +1015,7 @@ class _MainScreenState extends State<MainScreen> {
 // ---------------- Home Screen ---------------- //
 
 class HomeScreenBody extends StatefulWidget {
-  const HomeScreenBody({super.key});
+  const HomeScreenBody({super.key, required String location});
 
   @override
   State<HomeScreenBody> createState() => _HomeScreenBodyState();

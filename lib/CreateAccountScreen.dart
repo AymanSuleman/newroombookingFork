@@ -25,13 +25,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const Color primary = AppColors.primary2;
-    const Color textLight = Color(0xFF101c22);
-    const Color textDark = Color(0xFFF6F7F8);
+      const Color textLight = Color(0xFF101c22);
     const Color subtleLight = Color(0xFFE5E7EB);
-    const Color subtleDark = Color(0xFF1F2937);
     const Color placeholderLight = Color(0xFF6B7280);
-    const Color placeholderDark = Color(0xFF9CA3AF);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF6F7F8), // background-light
@@ -100,8 +96,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide:
-                              const BorderSide(color: primary, width: 2),
+                          borderSide: const BorderSide(
+                              color: AppColors.primary2, width: 2),
                         ),
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 16,
@@ -135,8 +131,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide:
-                              const BorderSide(color: primary, width: 2),
+                          borderSide: const BorderSide(
+                              color: AppColors.primary2, width: 2),
                         ),
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 16,
@@ -170,8 +166,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide:
-                              const BorderSide(color: primary, width: 2),
+                          borderSide: const BorderSide(
+                              color: AppColors.primary2, width: 2),
                         ),
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 16,
@@ -213,7 +209,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         ));
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: primary,
+                    backgroundColor: AppColors.primary2,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
