@@ -432,7 +432,7 @@ class _HotelBookingWelcomeState extends State<HotelBookingWelcome>
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeScreenBody(location: query),
+          builder: (context) => MainScreen(),
         ),
       );
     }

@@ -320,7 +320,7 @@ class HistoryScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => const RoomDetailsPage(
-                            hotel: {},
+                           
                           ),
                         ),
                       );

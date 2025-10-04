@@ -930,6 +930,461 @@
 // // }
 
 //------------------search abr code-------------------//
+// import 'package:flutter/material.dart';
+// import 'package:newroombooking/HistoryScreen.dart';
+// import 'package:newroombooking/ProfileScreen.dart';
+// import 'package:newroombooking/RoomDetailsPage.dart';
+// import 'package:newroombooking/favorites_screen.dart';
+// import 'package:newroombooking/notification.dart';
+// import 'theme.dart';
+
+// class MainScreen extends StatefulWidget {
+//   const MainScreen({super.key,});
+
+//   @override
+//   State<MainScreen> createState() => _MainScreenState();
+// }
+
+// class _MainScreenState extends State<MainScreen> {
+//   int _currentIndex = 0;
+
+//   // Screens for bottom navigation
+//   final List<Widget> _screens = [
+//     const HomeScreenBody(
+//       location: '',
+//     ),
+//     const FavoritesScreen(),
+//     const HistoryScreen(),
+//     const ProfileScreen(),
+//   ];
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: _screens[_currentIndex],
+//       bottomNavigationBar: BottomNavigationBar(
+//         currentIndex: _currentIndex,
+//         type: BottomNavigationBarType.fixed,
+//         selectedItemColor: AppColors.primary2,
+//         unselectedItemColor: Colors.grey,
+//         backgroundColor: Colors.white,
+//         onTap: (index) {
+//           setState(() {
+//             _currentIndex = index;
+//           });
+//         },
+//         items: [
+//           BottomNavigationBarItem(
+//             icon: _buildNavIcon(Icons.home, 0),
+//             label: "Home",
+//           ),
+//           BottomNavigationBarItem(
+//             icon: _buildNavIcon(Icons.favorite_border, 1),
+//             label: "Favorite",
+//           ),
+//           BottomNavigationBarItem(
+//             icon: _buildNavIcon(Icons.history, 2),
+//             label: "History",
+//           ),
+//           BottomNavigationBarItem(
+//             icon: _buildNavIcon(Icons.person, 3),
+//             label: "Profile",
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
+//   /// Custom builder for nav icons
+//   Widget _buildNavIcon(IconData icon, int index) {
+//     final bool isSelected = _currentIndex == index;
+//     return Container(
+//       padding: const EdgeInsets.all(8),
+//       decoration: BoxDecoration(
+//         color: isSelected ? AppColors.primary2 : Colors.transparent,
+//         shape: BoxShape.circle, // 👈 Circle shape
+//       ),
+//       child: Icon(
+//         icon,
+//         color: isSelected ? Colors.white : Colors.grey,
+//       ),
+//     );
+//   }
+// }
+
+// // ---------------- Home Screen ---------------- //
+
+// class HomeScreenBody extends StatefulWidget {
+//   const HomeScreenBody({super.key, required String location});
+
+//   @override
+//   State<HomeScreenBody> createState() => _HomeScreenBodyState();
+// }
+
+// class _HomeScreenBodyState extends State<HomeScreenBody> {
+//   final TextEditingController _searchController = TextEditingController();
+
+//   // All hotels with categories
+//   final List<Map<String, dynamic>> hotels = [
+//     {
+//       "title": "The Grand Majestic",
+//       "subtitle": "Luxury hotel in downtown",
+//       "price": "\$250/night",
+//       "rating": "4.8",
+//       "category": "Hotels",
+//       "image":
+//           "https://lh3.googleusercontent.com/aida-public/AB6AXuAbceWUbt2SiWY9wIMC8JTqHG-BzLs2uiKEDYikVS7BZX5BkdOh3Nrh2CzSud-CKFlh9VTS73c3XYVcdpd7jLlQtQeb2FrSHctwyRLO3U1kMC2ZCWObx4CxOOmajsKsOGsvF7M6ch9qOW-yAPcBFSMPElmF2B9svy1Ger3IAR3HN42agbywHRY6KXRQYYTbBn8kMrRHpgoP1ymyUfwmForxsHskrSfKWzwOE9haybSOMmIu4sQiSOcN88_2A0irITGZMup-7nAZKO4",
+//     },
+//     {
+//       "title": "Cozy Retreat Apartments",
+//       "subtitle": "Modern apartments with city views",
+//       "price": "\$150/night",
+//       "rating": "4.5",
+//       "category": "Apartments",
+//       "image":
+//           "https://lh3.googleusercontent.com/aida-public/AB6AXuAqzhUEJlZ9Yg7eOj9QYNsMFEkaYryzrvN_x_CChkc1oaaAxNrzHWgHHN6pI7Yf46qr0niu2Mxv64WSf0jkxdSbKnjSjGgR5OXQEjIOPLlHTyvzniDb7hVzqB1onNsTkMlIdRSK1ckKbu_orOk8ZZ5pPJo9CQi1BvlGiwffv02hPHIxKgZzV0ZhYk9n8HOvjq5hh72uGvzq27y62YSf-GwdpOHQdEjKvr1sSht-exrHZNd62XfyQY4S7gZ381berS1FAF3FNyDRAQU",
+//     },
+//     {
+//       "title": "Seaside Vacation Rentals",
+//       "subtitle": "Beachfront houses for families",
+//       "price": "\$300/night",
+//       "rating": "4.7",
+//       "category": "Vacation Rentals",
+//       "image":
+//           "https://lh3.googleusercontent.com/aida-public/AB6AXuAFlwVEipjMGkvA6rtt47HJtlF9ECWHfx2fu4rqzxP9eBgtY3PJmg2fJe39XNBAJQCbKg8BUyHCGdh6GzQ-Yh7YB5-aahTtiZguY3oChPv_jiaB-E4ZTNLC8a2VRoKuCBNMeHeL6912EYi1jamchCrXKSc1fOhjK2vEjbqmRvGE17LR0HRGsFI1WW2MtftRNSNoXvFFhrDWoqg44q7ngCseZfsFLdr5x97qKwanf6e6M1JEeqf12DUwOwiJfLlOkDzjh5q8wzBmHI0",
+//     },
+//     {
+//       "title": "Tranquil Villa Escapes",
+//       "subtitle": "Private villas with pools",
+//       "price": "\$400/night",
+//       "rating": "4.9",
+//       "category": "Villas",
+//       "image":
+//           "https://lh3.googleusercontent.com/aida-public/AB6AXuB0zds5e12yrln94NDdkmBbrikw6QXb7Klj1QjqfvZS18mlb3FTOXtL0jdQo2CBN9NWNYdGICekF12nQ3cnaSaXlmmwKMfEL-r_4GjGGJC4WyhDLiOUP4qHx7q280Xlt-5ZTCBn9CW2qQ242GWkuNu7vBHAI9687akaTcATkUj_zcQmjDVhaejxtbRZeb-Lj1Dx65GtUIVwlbT3wt3z5DNfKJXZ98JZiLxr59DrAsdlm5HFeJL0lIAkvUO3IznkmUZM7g8RgO5-MKE",
+//     },
+//   ];
+
+//   List<Map<String, dynamic>> filteredHotels = [];
+//   String selectedCategory = "All";
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     filteredHotels = hotels;
+//   }
+
+//   void _filterHotels(String query) {
+//     setState(() {
+//       filteredHotels = hotels
+//           .where((hotel) =>
+//               (selectedCategory == "All" ||
+//                   hotel["category"] == selectedCategory) &&
+//               (hotel["title"].toLowerCase().contains(query.toLowerCase()) ||
+//                   hotel["subtitle"]
+//                       .toLowerCase()
+//                       .contains(query.toLowerCase())))
+//           .toList();
+//     });
+//   }
+
+//   void _selectCategory(String category) {
+//     setState(() {
+//       selectedCategory = category;
+//       filteredHotels = hotels
+//           .where((hotel) =>
+//               (category == "All" || hotel["category"] == category) &&
+//               (hotel["title"]
+//                       .toLowerCase()
+//                       .contains(_searchController.text.toLowerCase()) ||
+//                   hotel["subtitle"]
+//                       .toLowerCase()
+//                       .contains(_searchController.text.toLowerCase())))
+//           .toList();
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         automaticallyImplyLeading: false,
+//         backgroundColor: Colors.white.withOpacity(0.8),
+//         elevation: 0,
+//         title: const Text("Find your stay"),
+//         actions: [
+//           Stack(
+//             children: [
+//               IconButton(
+//                 icon: const Icon(Icons.notifications_none),
+//                 onPressed: () {
+//                   Navigator.push(
+//                     context,
+//                     MaterialPageRoute(
+//                         builder: (context) => const NotificationScreen()),
+//                   );
+//                 },
+//               ),
+//               Positioned(
+//                 right: 11,
+//                 top: 11,
+//                 child: Container(
+//                   height: 10,
+//                   width: 10,
+//                   decoration: BoxDecoration(
+//                     color: AppColors.primary2,
+//                     shape: BoxShape.circle,
+//                     border: Border.all(color: Colors.white, width: 2),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           )
+//         ],
+//       ),
+//       body: SafeArea(
+//         child: SingleChildScrollView(
+//           child: Column(
+//             children: [
+//               // Search bar
+//               Padding(
+//                 padding:
+//                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+//                 child: TextField(
+//                   controller: _searchController,
+//                   onChanged: _filterHotels,
+//                   decoration: InputDecoration(
+//                     prefixIcon: const Icon(Icons.search, color: Colors.grey),
+//                     hintText: "Where to?",
+//                     filled: true,
+//                     fillColor: Colors.white,
+//                     border: OutlineInputBorder(
+//                       borderRadius: BorderRadius.circular(30),
+//                       borderSide: BorderSide.none,
+//                     ),
+//                   ),
+//                 ),
+//               ),
+
+//               // Categories
+//               SizedBox(
+//                 height: 50,
+//                 child: ListView(
+//                   scrollDirection: Axis.horizontal,
+//                   padding: const EdgeInsets.symmetric(horizontal: 16),
+//                   children: [
+//                     CategoryTab(
+//                       icon: Icons.all_inclusive,
+//                       label: "All",
+//                       selected: selectedCategory == "All",
+//                       onTap: () => _selectCategory("All"),
+//                     ),
+//                     CategoryTab(
+//                       icon: Icons.hotel,
+//                       label: "Hotels",
+//                       selected: selectedCategory == "Hotels",
+//                       onTap: () => _selectCategory("Hotels"),
+//                     ),
+//                     CategoryTab(
+//                       icon: Icons.apartment,
+//                       label: "Apartments",
+//                       selected: selectedCategory == "Apartments",
+//                       onTap: () => _selectCategory("Apartments"),
+//                     ),
+//                     CategoryTab(
+//                       icon: Icons.cabin,
+//                       label: "Vacation Rentals",
+//                       selected: selectedCategory == "Vacation Rentals",
+//                       onTap: () => _selectCategory("Vacation Rentals"),
+//                     ),
+//                     CategoryTab(
+//                       icon: Icons.villa,
+//                       label: "Villas",
+//                       selected: selectedCategory == "Villas",
+//                       onTap: () => _selectCategory("Villas"),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+
+//               // Hotels list
+//               ListView.builder(
+//                 shrinkWrap: true,
+//                 physics: const NeverScrollableScrollPhysics(),
+//                 padding: const EdgeInsets.all(16),
+//                 itemCount: filteredHotels.length,
+//                 itemBuilder: (context, index) {
+//                   final hotel = filteredHotels[index];
+//                   return Padding(
+//                     padding: const EdgeInsets.only(bottom: 16),
+//                     child: InkWell(
+//                       borderRadius: BorderRadius.circular(16),
+//                       onTap: () {
+//                         Navigator.push(
+//                           context,
+//                           MaterialPageRoute(
+//                             builder: (context) => RoomDetailsPage(hotel: hotel),
+//                           ),
+//                         );
+//                       },
+//                       child: HotelCard(
+//                         title: hotel["title"],
+//                         subtitle: hotel["subtitle"],
+//                         price: hotel["price"],
+//                         rating: hotel["rating"],
+//                         image: hotel["image"],
+//                       ),
+//                     ),
+//                   );
+//                 },
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class HotelCard extends StatelessWidget {
+//   final String title;
+//   final String subtitle;
+//   final String price;
+//   final String rating;
+//   final String image;
+
+//   const HotelCard({
+//     super.key,
+//     required this.title,
+//     required this.subtitle,
+//     required this.price,
+//     required this.rating,
+//     required this.image,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+//       elevation: 4,
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           // Image with favorite button
+//           Stack(
+//             children: [
+//               ClipRRect(
+//                 borderRadius:
+//                     const BorderRadius.vertical(top: Radius.circular(16)),
+//                 child: Image.network(
+//                   image,
+//                   height: 150,
+//                   width: double.infinity,
+//                   fit: BoxFit.cover,
+//                 ),
+//               ),
+//               Positioned(
+//                 top: 8,
+//                 right: 8,
+//                 child: IconButton(
+//                   icon: const Icon(Icons.favorite_border, color: Colors.white),
+//                   onPressed: () {},
+//                 ),
+//               ),
+//             ],
+//           ),
+//           // Details
+//           Padding(
+//             padding: const EdgeInsets.all(12),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [
+//                     Expanded(
+//                       child: Text(
+//                         title,
+//                         style: const TextStyle(
+//                             fontWeight: FontWeight.bold, fontSize: 16),
+//                         overflow: TextOverflow.ellipsis,
+//                       ),
+//                     ),
+//                     Row(
+//                       children: [
+//                         const Icon(Icons.star, size: 16, color: Colors.amber),
+//                         Text(rating),
+//                       ],
+//                     ),
+//                   ],
+//                 ),
+//                 const SizedBox(height: 4),
+//                 Text(subtitle,
+//                     style: const TextStyle(color: AppColors.textLight)),
+//                 const SizedBox(height: 6),
+//                 Text(
+//                   price,
+//                   style: const TextStyle(
+//                       fontWeight: FontWeight.bold, color: AppColors.textDark),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// class CategoryTab extends StatelessWidget {
+//   final IconData icon;
+//   final String label;
+//   final bool selected;
+//   final VoidCallback? onTap;
+
+//   const CategoryTab({
+//     super.key,
+//     required this.icon,
+//     required this.label,
+//     this.selected = false,
+//     this.onTap,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: onTap,
+//       child: Container(
+//         margin: const EdgeInsets.only(right: 12),
+//         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+//         decoration: BoxDecoration(
+//           color: selected ? AppColors.primary2 : Colors.grey.shade200,
+//           borderRadius: BorderRadius.circular(20), // 👈 Rounded shape
+//         ),
+//         child: Row(
+//           mainAxisSize: MainAxisSize.min,
+//           children: [
+//             Icon(
+//               icon,
+//               size: 20,
+//               color: selected ? Colors.white : Colors.black87,
+//             ),
+//             const SizedBox(width: 6),
+//             Text(
+//               label,
+//               style: TextStyle(
+//                 color: selected ? Colors.white : Colors.black87,
+//                 fontWeight: selected ? FontWeight.bold : FontWeight.normal,
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
+
 import 'package:flutter/material.dart';
 import 'package:newroombooking/HistoryScreen.dart';
 import 'package:newroombooking/ProfileScreen.dart';
@@ -948,19 +1403,65 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
+  final TextEditingController _searchController = TextEditingController();
+
   // Screens for bottom navigation
-  final List<Widget> _screens = [
-    const HomeScreenBody(
-      location: '',
-    ),
-    const FavoritesScreen(),
-    const HistoryScreen(),
-    const ProfileScreen(),
-  ];
+  late final List<Widget> _screens;
+
+  @override
+  void initState() {
+    super.initState();
+    _screens = [
+      HomeScreenBody(
+        searchController: _searchController,
+      ),
+      const FavoritesScreen(),
+      const HistoryScreen(),
+      const ProfileScreen(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: _currentIndex == 0
+          ? AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: Colors.white.withOpacity(0.8),
+              elevation: 0,
+              title: const Text("Find your stay"),
+              actions: [
+                Stack(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.notifications_none),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NotificationScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                    Positioned(
+                      right: 11,
+                      top: 11,
+                      child: Container(
+                        height: 10,
+                        width: 10,
+                        decoration: BoxDecoration(
+                          color: AppColors.primary2,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 2),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            )
+          : null,
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -1002,7 +1503,7 @@ class _MainScreenState extends State<MainScreen> {
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: isSelected ? AppColors.primary2 : Colors.transparent,
-        shape: BoxShape.circle, // 👈 Circle shape
+        shape: BoxShape.circle,
       ),
       child: Icon(
         icon,
@@ -1015,15 +1516,14 @@ class _MainScreenState extends State<MainScreen> {
 // ---------------- Home Screen ---------------- //
 
 class HomeScreenBody extends StatefulWidget {
-  const HomeScreenBody({super.key, required String location});
+  final TextEditingController searchController;
+  const HomeScreenBody({super.key, required this.searchController});
 
   @override
   State<HomeScreenBody> createState() => _HomeScreenBodyState();
 }
 
 class _HomeScreenBodyState extends State<HomeScreenBody> {
-  final TextEditingController _searchController = TextEditingController();
-
   // All hotels with categories
   final List<Map<String, dynamic>> hotels = [
     {
@@ -1095,150 +1595,112 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
               (category == "All" || hotel["category"] == category) &&
               (hotel["title"]
                       .toLowerCase()
-                      .contains(_searchController.text.toLowerCase()) ||
+                      .contains(widget.searchController.text.toLowerCase()) ||
                   hotel["subtitle"]
                       .toLowerCase()
-                      .contains(_searchController.text.toLowerCase())))
+                      .contains(widget.searchController.text.toLowerCase())))
           .toList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white.withOpacity(0.8),
-        elevation: 0,
-        title: const Text("Find your stay"),
-        actions: [
-          Stack(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.notifications_none),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const NotificationScreen()),
-                  );
-                },
-              ),
-              Positioned(
-                right: 11,
-                top: 11,
-                child: Container(
-                  height: 10,
-                  width: 10,
-                  decoration: BoxDecoration(
-                    color: AppColors.primary2,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 2),
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Search bar
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: TextField(
+                controller: widget.searchController,
+                onChanged: _filterHotels,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                  hintText: "Where to?",
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none,
                   ),
                 ),
               ),
-            ],
-          )
-        ],
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Search bar
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: TextField(
-                  controller: _searchController,
-                  onChanged: _filterHotels,
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                    hintText: "Where to?",
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: BorderSide.none,
+            ),
+
+            // Categories
+            SizedBox(
+              height: 50,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                children: [
+                  CategoryTab(
+                    icon: Icons.all_inclusive,
+                    label: "All",
+                    selected: selectedCategory == "All",
+                    onTap: () => _selectCategory("All"),
+                  ),
+                  CategoryTab(
+                    icon: Icons.hotel,
+                    label: "Hotels",
+                    selected: selectedCategory == "Hotels",
+                    onTap: () => _selectCategory("Hotels"),
+                  ),
+                  CategoryTab(
+                    icon: Icons.apartment,
+                    label: "Apartments",
+                    selected: selectedCategory == "Apartments",
+                    onTap: () => _selectCategory("Apartments"),
+                  ),
+                  CategoryTab(
+                    icon: Icons.cabin,
+                    label: "Vacation Rentals",
+                    selected: selectedCategory == "Vacation Rentals",
+                    onTap: () => _selectCategory("Vacation Rentals"),
+                  ),
+                  CategoryTab(
+                    icon: Icons.villa,
+                    label: "Villas",
+                    selected: selectedCategory == "Villas",
+                    onTap: () => _selectCategory("Villas"),
+                  ),
+                ],
+              ),
+            ),
+
+            // Hotels list
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(16),
+              itemCount: filteredHotels.length,
+              itemBuilder: (context, index) {
+                final hotel = filteredHotels[index];
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(16),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RoomDetailsPage(),
+                        ),
+                      );
+                    },
+                    child: HotelCard(
+                      title: hotel["title"],
+                      subtitle: hotel["subtitle"],
+                      price: hotel["price"],
+                      rating: hotel["rating"],
+                      image: hotel["image"],
                     ),
                   ),
-                ),
-              ),
-
-              // Categories
-              SizedBox(
-                height: 50,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  children: [
-                    CategoryTab(
-                      icon: Icons.all_inclusive,
-                      label: "All",
-                      selected: selectedCategory == "All",
-                      onTap: () => _selectCategory("All"),
-                    ),
-                    CategoryTab(
-                      icon: Icons.hotel,
-                      label: "Hotels",
-                      selected: selectedCategory == "Hotels",
-                      onTap: () => _selectCategory("Hotels"),
-                    ),
-                    CategoryTab(
-                      icon: Icons.apartment,
-                      label: "Apartments",
-                      selected: selectedCategory == "Apartments",
-                      onTap: () => _selectCategory("Apartments"),
-                    ),
-                    CategoryTab(
-                      icon: Icons.cabin,
-                      label: "Vacation Rentals",
-                      selected: selectedCategory == "Vacation Rentals",
-                      onTap: () => _selectCategory("Vacation Rentals"),
-                    ),
-                    CategoryTab(
-                      icon: Icons.villa,
-                      label: "Villas",
-                      selected: selectedCategory == "Villas",
-                      onTap: () => _selectCategory("Villas"),
-                    ),
-                  ],
-                ),
-              ),
-
-              // Hotels list
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.all(16),
-                itemCount: filteredHotels.length,
-                itemBuilder: (context, index) {
-                  final hotel = filteredHotels[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(16),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RoomDetailsPage(hotel: hotel),
-                          ),
-                        );
-                      },
-                      child: HotelCard(
-                        title: hotel["title"],
-                        subtitle: hotel["subtitle"],
-                        price: hotel["price"],
-                        rating: hotel["rating"],
-                        image: hotel["image"],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -1358,7 +1820,7 @@ class CategoryTab extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
           color: selected ? AppColors.primary2 : Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(20), // 👈 Rounded shape
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,

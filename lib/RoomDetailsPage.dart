@@ -3,13 +3,22 @@ import 'package:newroombooking/PaymentDetailsPage.dart';
 import 'package:newroombooking/theme.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 
-class RoomDetailsPage extends StatelessWidget {
-  const RoomDetailsPage({super.key, required Map<String, dynamic> hotel});
+class RoomDetailsPage extends StatefulWidget {
+  const RoomDetailsPage({super.key});
+
+  @override
+  State<RoomDetailsPage> createState() => _RoomDetailsPageState();
+}
+
+class _RoomDetailsPageState extends State<RoomDetailsPage> {
+  String selectedCategory = "2X (26)";
+  int _adults = 1;
+  int _children = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC), // bg-slate-50
+      backgroundColor: const Color(0xFFF8FAFC),
       appBar: AppBar(
         backgroundColor: Colors.white.withOpacity(0.9),
         elevation: 0,
@@ -19,20 +28,63 @@ class RoomDetailsPage extends StatelessWidget {
         ),
         centerTitle: true,
         title: const Text(
-          "Select a Room",
+          "Rooms",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: AppColors.normaltext,
-
-            // text-primary
           ),
         ),
       ),
       body: ListView(
+        padding: const EdgeInsets.only(bottom: 80), // leave space for button
         children: [
-          // Room Image
+          // ✅ Select Rooms Category
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Select Rooms Category",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.normaltext,
+                  ),
+                ),
+                const SizedBox(height: 12.0),
+                Row(
+                  children: [
+                    _CategoryChip(
+                      key: const ValueKey("2X (26)"),
+                      label: "2X (26)",
+                      isSelected: selectedCategory == "2X (26)",
+                      onTap: () => setState(() => selectedCategory = "2X (26)"),
+                    ),
+                    const SizedBox(width: 8.0),
+                    _CategoryChip(
+                      key: const ValueKey("3X (20)"),
+                      label: "3X (20)",
+                      isSelected: selectedCategory == "3X (20)",
+                      onTap: () => setState(() => selectedCategory = "3X (20)"),
+                    ),
+                    const SizedBox(width: 8.0),
+                    _CategoryChip(
+                      key: const ValueKey("4X (6)"),
+                      label: "4X (6)",
+                      isSelected: selectedCategory == "4X (6)",
+                      onTap: () => setState(() => selectedCategory = "4X (6)"),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          // ✅ Room Image
           Container(
-            height: 250,
+            height: 200,
+            margin: const EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               image: const DecorationImage(
@@ -44,63 +96,210 @@ class RoomDetailsPage extends StatelessWidget {
             ),
           ),
 
-          // Details Section
+          const SizedBox(height: 12.0),
+
+          // ✅ Room Info
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
-                  "Deluxe Suite",
-                  style: TextStyle(
-                    fontSize: 24,
+                  selectedCategory,
+                  style: const TextStyle(
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: AppColors.normaltext,
                   ),
                 ),
-                SizedBox(height: 8),
-                Text(
-                  "This spacious suite offers a king-size bed, a separate living area, and a private balcony with stunning city views. Enjoy complimentary breakfast and access to the executive lounge.",
+                const SizedBox(height: 4.0),
+                Row(
+                  children: const [
+                    Icon(Icons.people, color: Colors.green, size: 18),
+                    SizedBox(width: 6),
+                    Text(
+                      "26 rooms left",
+                      style: TextStyle(color: Colors.green, fontSize: 14),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8.0),
+                const Text(
+                  "No more than 3 Guests",
+                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 16.0),
+
+          // ✅ Room Tariff
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Room Tariff",
                   style: TextStyle(
                     fontSize: 16,
+                    fontWeight: FontWeight.bold,
                     color: AppColors.normaltext,
+                  ),
+                ),
+                const SizedBox(height: 10.0),
+                IntrinsicHeight(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: _TariffTile(title: "Single Person", price: "999.00"),
+                      ),
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                        child: _TariffTile(title: "Double Person", price: "1300.00"),
+                      ),
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                        child: _TariffTile(title: "Triple  Person", price: "1600.00"),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+
+                // ✅ Guest Selection
+                Container(
+                  padding: const EdgeInsets.all(12.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12.0),
+                    border: Border.all(color: Colors.grey.shade300),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Guests",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.normaltext,
+                        ),
+                      ),
+                      const SizedBox(height: 12.0),
+
+                      // Adults Selector
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Adults",
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.normaltext),
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    if (_adults > 1) _adults--;
+                                  });
+                                },
+                                icon: const Icon(Icons.remove_circle_outline),
+                              ),
+                              Text(
+                                "$_adults",
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _adults++;
+                                  });
+                                },
+                                icon: const Icon(Icons.add_circle_outline),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      const Divider(),
+
+                      // Children Selector
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Children",
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.normaltext),
+                          ),
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    if (_children > 0) _children--;
+                                  });
+                                },
+                                icon: const Icon(Icons.remove_circle_outline),
+                              ),
+                              Text(
+                                "$_children",
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _children++;
+                                  });
+                                },
+                                icon: const Icon(Icons.add_circle_outline),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
 
-          // Amenities Section
+          const SizedBox(height: 12.0),
+
+          // ✅ Amenities
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
                   "Amenities",
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: AppColors.normaltext,
                   ),
                 ),
-                const SizedBox(height: 16),
-                GridView.count(
-                  crossAxisCount: 2,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 3.5,
+                const SizedBox(height: 12.0),
+                Wrap(
+                  spacing: 12.0,
+                  runSpacing: 12.0,
                   children: const [
-                    AmenityTile(icon: Icons.wifi, title: "Free Wi-Fi"),
-                    AmenityTile(icon: Icons.coffee, title: "Coffee Maker"),
-                    AmenityTile(icon: Icons.tv, title: "Flat-screen TV"),
-                    AmenityTile(icon: Icons.pool, title: "Swimming Pool"),
-                    AmenityTile(
-                        icon: Icons.fitness_center, title: "Fitness Center"),
-                    AmenityTile(
-                        icon: Icons.local_parking, title: "Free Parking"),
+                    AmenityTile(icon: Icons.wifi, title: "Wifi"),
+                    AmenityTile(icon: Icons.local_parking, title: "Parking"),
+                    AmenityTile(icon: Icons.local_laundry_service, title: "Laundry"),
+                    AmenityTile(icon: Icons.free_breakfast, title: "Bed Tea / Breakfast"),
                   ],
                 ),
               ],
@@ -109,17 +308,16 @@ class RoomDetailsPage extends StatelessWidget {
         ],
       ),
 
-      // Sticky Bottom Book Now Button
+      // ✅ Sticky Bottom Button
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16.0),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primary2,
-            minimumSize: const Size(double.infinity, 56),
+            minimumSize: const Size(double.infinity, 52),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(12.0),
             ),
-            elevation: 4,
           ),
           onPressed: () {
             DateSelectionBottomSheet.show(context);
@@ -127,92 +325,97 @@ class RoomDetailsPage extends StatelessWidget {
           child: const Text(
             "Book Now",
             style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: AppColors.iconBg),
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
         ),
       ),
     );
   }
+}
 
-  // Bottom Sheet for Date Selection
-  void _showBookingSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Select Dates",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF0D171B),
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
+// ✅ Category Chip
+class _CategoryChip extends StatelessWidget {
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
 
-              // Date Fields
-              Row(
-                children: const [
-                  Expanded(child: DateInput(label: "Check-in")),
-                  SizedBox(width: 12),
-                  Expanded(child: DateInput(label: "Check-out")),
-                ],
-              ),
+  const _CategoryChip({
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+    super.key,
+  });
 
-              const SizedBox(height: 24),
-
-              // Book Now Button
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF1193d4),
-                  minimumSize: Size(double.infinity, 56),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text(
-                  "Book Now",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-            ],
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        decoration: BoxDecoration(
+          color: isSelected ? AppColors.primary2 : Colors.white,
+          borderRadius: BorderRadius.circular(8.0),
+          border: Border.all(
+            color: isSelected ? AppColors.primary2 : Colors.grey.shade300,
           ),
-        );
-      },
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: isSelected ? Colors.white : AppColors.normaltext,
+          ),
+        ),
+      ),
     );
   }
 }
 
-// Amenity Widget
+// ✅ Tariff Tile
+class _TariffTile extends StatelessWidget {
+  final String title;
+  final String price;
+
+  const _TariffTile({required this.title, required this.price, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12.0),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey.shade300),
+        borderRadius: BorderRadius.circular(8.0),
+        color: Colors.white,
+      ),
+      child: Column(
+        children: [
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: AppColors.normaltext),
+          ),
+          const SizedBox(height: 6.0),
+          Text(
+            "₹$price",
+            style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary2),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ✅ Amenity Tile
 class AmenityTile extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -222,10 +425,10 @@ class AmenityTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.0),
         boxShadow: [
           BoxShadow(
             blurRadius: 4,
@@ -234,15 +437,16 @@ class AmenityTile extends StatelessWidget {
         ],
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, color: AppColors.primary2),
-          const SizedBox(width: 12),
+          const SizedBox(width: 8.0),
           Text(
             title,
             style: const TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 14,
-              color: Color(0xFF0D171B),
+              color: AppColors.normaltext,
             ),
           ),
         ],
@@ -251,320 +455,58 @@ class AmenityTile extends StatelessWidget {
   }
 }
 
-// Date Input Field
-class DateInput extends StatelessWidget {
-  final String label;
-  const DateInput({super.key, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Color(0xFF4C809A),
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          decoration: InputDecoration(
-            prefixIcon: const Icon(Icons.calendar_today, color: Colors.grey),
-            hintText: "Select date",
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-          readOnly: true,
-          onTap: () {
-            // TODO: implement DatePicker
-          },
-        ),
-      ],
-    );
-  }
-}
-// Date Selection Bottom Sheet
-
+// ✅ Date Selection Bottom Sheet
 class DateSelectionBottomSheet {
-  static Future<List<DateTime?>?> show(BuildContext context) {
-    return showModalBottomSheet<List<DateTime?>>(
-      backgroundColor: AppColors.background,
+  static void show(BuildContext context) {
+    showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
       ),
       builder: (context) {
-        List<DateTime?> _dates = [];
-
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 40,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[400],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  const Text(
-                    "Select Dates",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Calendar
-                  CalendarDatePicker2(
-                    config: CalendarDatePicker2Config(
-                      calendarType: CalendarDatePicker2Type.range,
-                      selectedDayHighlightColor: AppColors.primary2,
-                      weekdayLabels: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-                      firstDayOfWeek: 0,
-                    ),
-                    value: _dates,
-                    onValueChanged: (dates) {
-                      setState(() => _dates = dates);
-                    },
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  // Show selected check-in/out
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        _dates.isNotEmpty && _dates[0] != null
-                            ? "Check-in\n${_formatDate(_dates[0]!)}"
-                            : "Check-in",
-                        style: const TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                      Text(
-                        _dates.length > 1 && _dates[1] != null
-                            ? "Check-out\n${_formatDate(_dates[1]!)}"
-                            : "Check-out",
-                        style: const TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  // Done Button
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary2,
-                      minimumSize: const Size(double.infinity, 56),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      elevation: 4,
-                    ),
-                    onPressed: () {
-                      final parentContext = Navigator.of(context).context;
-                      // GuestSelectionBottomSheet.show(context);
-                      Navigator.pop(context, _dates);
-
-                      // Then open Guest Selection after closing
-                      Future.delayed(const Duration(milliseconds: 200), () {
-                        GuestSelectionBottomSheet.show(context);
-                      });
-//                       Future.delayed(const Duration(milliseconds: 200), () {
-//   showModalBottomSheet(
-//     context: Navigator.of(context, rootNavigator: true).context,
-//     builder: (context) => GuestSelectionBottomSheet(),
-//   );
-// });
-                    },
-                    child: const Text(
-                      "Next",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.iconBg),
-                    ),
-                  ),
-                ],
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                "Select Dates",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: AppColors.normaltext,
+                ),
               ),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  static String _formatDate(DateTime date) {
-    return "${date.day}/${date.month}/${date.year}";
-  }
-}
-// guest selection bottom sheet
-
-class GuestSelectionBottomSheet {
-  static Future<Map<String, int>?> show(BuildContext context) {
-    int adults = 1;
-    int children = 0;
-
-    return showModalBottomSheet<Map<String, int>>(
-      backgroundColor: AppColors.background,
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Handle bar
-                  Container(
-                    width: 40,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[400],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-
-                  // Title
-                  const Text(
-                    "Select Guests",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Adults
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text("Adults",
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w600)),
-                          Text("Ages 13 or above",
-                              style: TextStyle(color: Colors.grey)),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              if (adults > 1) {
-                                setState(() => adults--);
-                              }
-                            },
-                            icon: const Icon(Icons.remove_circle_outline),
-                          ),
-                          Text("$adults",
-                              style: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
-                          IconButton(
-                            onPressed: () {
-                              setState(() => adults++);
-                            },
-                            icon: const Icon(Icons.add_circle_outline),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const Divider(),
-
-                  // Children
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text("Children",
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w600)),
-                          Text("Ages 2–12",
-                              style: TextStyle(color: Colors.grey)),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              if (children > 0) {
-                                setState(() => children--);
-                              }
-                            },
-                            icon: const Icon(Icons.remove_circle_outline),
-                          ),
-                          Text("$children",
-                              style: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
-                          IconButton(
-                            onPressed: () {
-                              setState(() => children++);
-                            },
-                            icon: const Icon(Icons.add_circle_outline),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Done button
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary2,
-                      minimumSize: const Size(double.infinity, 56),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      elevation: 4,
-                    ),
-                    // onPressed: () {
-                    //   Navigator.pop(context, {
-                    //     "adults": adults,
-                    //     "children": children,
-                    //   });
-                    // },
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PaymentDetailsPage()));
-                    },
-                    child: const Text(
-                      "Done",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.iconBg),
-                    ),
-                  ),
-                ],
+              const SizedBox(height: 16.0),
+              CalendarDatePicker2(
+                config: CalendarDatePicker2Config(
+                  calendarType: CalendarDatePicker2Type.range,
+                ),
+                value: [],
+                onValueChanged: (dates) {},
               ),
-            );
-          },
+              const SizedBox(height: 16.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary2,
+                  minimumSize: const Size(double.infinity, 52),
+                  
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PaymentDetailsPage(),
+                    ),
+                  );
+                },
+                child: const Text("Continue to Payment" ,style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),),
+                     
+              ),
+            ],
+          ),
         );
       },
     );
