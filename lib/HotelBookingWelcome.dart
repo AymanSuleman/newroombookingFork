@@ -394,34 +394,40 @@ class HotelBookingWelcome extends StatefulWidget {
 
 class _HotelBookingWelcomeState extends State<HotelBookingWelcome>
     with TickerProviderStateMixin {
-  late AnimationController _welcomeController;
-  late AnimationController _fadeController;
+  late AnimationController _flowController;
+  late AnimationController _pulseController;
+
   final TextEditingController _locationController = TextEditingController();
+  bool _showContinue = false;
 
   @override
   void initState() {
     super.initState();
 
-    _welcomeController = AnimationController(
+    // Flow animation for whole content (bottom → center)
+    _flowController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1500),
-    )..forward();
-
-    _fadeController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1200),
     );
 
-    // Trigger fade after welcome animation
-    Future.delayed(const Duration(milliseconds: 2000), () {
-      _fadeController.forward();
+    // Small pulse for logo
+    _pulseController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+      lowerBound: 0.95,
+      upperBound: 1.05,
+    )..repeat(reverse: true);
+
+    // Start flow animation after short delay
+    Future.delayed(const Duration(milliseconds: 400), () {
+      _flowController.forward();
     });
   }
 
   @override
   void dispose() {
-    _welcomeController.dispose();
-    _fadeController.dispose();
+    _flowController.dispose();
+    _pulseController.dispose();
     _locationController.dispose();
     super.dispose();
   }
@@ -429,12 +435,13 @@ class _HotelBookingWelcomeState extends State<HotelBookingWelcome>
   void _submitSearch() {
     final query = _locationController.text.trim();
     if (query.isNotEmpty) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MainScreen(),
-        ),
-      );
+      setState(() {
+        _showContinue = true;
+      });
+    } else {
+      setState(() {
+        _showContinue = false;
+      });
     }
   }
 
@@ -444,26 +451,27 @@ class _HotelBookingWelcomeState extends State<HotelBookingWelcome>
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.primary2 : const Color(0xFFf6f7f8),
-      body: Stack(
-        children: [
-          // Center animated logo
-          Center(
-            child: ScaleTransition(
-              scale: Tween<double>(begin: 0.5, end: 1).animate(
-                CurvedAnimation(
-                    parent: _welcomeController, curve: Curves.easeOut),
-              ),
-              child: RotationTransition(
-                turns: Tween<double>(begin: -0.04, end: 0).animate(
-                  CurvedAnimation(
-                      parent: _welcomeController, curve: Curves.easeOut),
-                ),
-                child: Container(
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary2.withOpacity(0.2),
-                    shape: BoxShape.circle,
-                  ),
+      body: AnimatedBuilder(
+        animation: _flowController,
+        builder: (context, child) {
+          final curvedValue =
+              Curves.easeOutBack.transform(_flowController.value);
+          final offsetY = (1 - curvedValue) * 400; // starts from bottom
+
+          return Transform.translate(
+            offset: Offset(0, offsetY),
+            child: child,
+          );
+        },
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Logo with pulse
+                ScaleTransition(
+                  scale: _pulseController,
                   child: Container(
                     padding: const EdgeInsets.all(32),
                     decoration: const BoxDecoration(
@@ -484,90 +492,94 @@ class _HotelBookingWelcomeState extends State<HotelBookingWelcome>
                     ),
                   ),
                 ),
-              ),
+                const SizedBox(height: 32),
+
+                // Title
+                Text(
+                  "Find Your Stay",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: isDark ? Colors.white : Colors.black87,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 22),
+
+                // Search input
+                TextField(
+                  controller: _locationController,
+                  onSubmitted: (_) => _submitSearch(),
+                  onChanged: (_) => _submitSearch(),
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                    hintText: "Enter your destination",
+                    filled: true,
+                    fillColor:
+                        isDark ? const Color(0xFF1e1e1e) : Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: isDark
+                            ? Colors.grey.shade700
+                            : Colors.grey.shade300,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: isDark
+                            ? Colors.grey.shade700
+                            : Colors.grey.shade300,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                          color: Color(0xFF1193d4), width: 2),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 12),
+                  ),
+                ),
+                const SizedBox(height: 24),
+
+                // Continue button
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 400),
+                  child: _showContinue
+                      ? SizedBox(
+                          width: double.infinity,
+                          height: 48,
+                          child: ElevatedButton(
+                            key: const ValueKey("continueBtn"),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MainScreen()),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: const Text(
+                              "Continue",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                ),
+              ],
             ),
           ),
-
-          // Bottom section with fade-in
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: FadeTransition(
-              opacity: _fadeController,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 40, left: 24, right: 24),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "Find Your Stay",
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: isDark ? Colors.white : Colors.black87,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 20),
-
-                    // Search input field
-                    TextField(
-                      controller: _locationController,
-                      onSubmitted: (_) => _submitSearch(),
-                      decoration: InputDecoration(
-                        prefixIcon:
-                            const Icon(Icons.search, color: Colors.grey),
-                        hintText: "Enter your destination",
-                        filled: true,
-                        fillColor:
-                            isDark ? const Color(0xFF1e1e1e) : Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: isDark
-                                ? Colors.grey.shade700
-                                : Colors.grey.shade300,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
-                            color: isDark
-                                ? Colors.grey.shade700
-                                : Colors.grey.shade300,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(
-                              color: Color(0xFF1193d4), width: 2),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 12),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class HotelResultsScreen extends StatelessWidget {
-  final String location;
-  const HotelResultsScreen({super.key, required this.location});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Hotel Results")),
-      body: Center(
-        child: Text(
-          "Showing results for: $location",
-          style: const TextStyle(fontSize: 20),
         ),
       ),
     );

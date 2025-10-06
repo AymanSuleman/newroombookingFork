@@ -47,7 +47,7 @@ class ConfirmAndPayPage extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Row(
+              child: Row(                                                 
                 children: [
                   // Text info
                   Expanded(
