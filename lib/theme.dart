@@ -109,26 +109,36 @@ class AppTheme {
     ),
     textTheme: TextTheme(
       titleLarge: TextStyle(
-          fontSize: 20.sp, fontWeight: FontWeight.bold, color: AppColors.textDark),
+          fontSize: 20.sp,
+          fontWeight: FontWeight.bold,
+          color: AppColors.textDark),
       labelMedium: TextStyle(
-          fontSize: 18.sp, fontWeight: FontWeight.w600, color: AppColors.textDark),
-      bodyLarge: TextStyle(fontSize: 16.sp, color: AppColors.textDark,fontWeight: FontWeight.w600 ),
+          fontSize: 18.sp,
+          fontWeight: FontWeight.w600,
+          color: AppColors.textDark),
+      labelSmall: TextStyle(
+          fontSize: 18.sp,
+          fontWeight: FontWeight.w600,
+          color: AppColors.textDark),
+      bodyLarge: TextStyle(
+          fontSize: 16.sp,
+          color: AppColors.textDark,
+          fontWeight: FontWeight.w600),
       bodyMedium: TextStyle(fontSize: 14.sp, color: AppColors.textDark),
       labelLarge: TextStyle(
           fontSize: 16.sp, fontWeight: FontWeight.bold, color: Colors.white),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primary2,
-        foregroundColor: Colors.white,
-        textStyle: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-        padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 4.w),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4.w),
-        ),
-        elevation: 2,
-      )
-    ),
+        style: ElevatedButton.styleFrom(
+      backgroundColor: AppColors.primary2,
+      foregroundColor: Colors.white,
+      textStyle: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+      padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 4.w),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4.w),
+      ),
+      elevation: 2,
+    )),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         textStyle: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),

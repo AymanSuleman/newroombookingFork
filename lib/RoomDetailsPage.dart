@@ -1261,18 +1261,29 @@ class DateSelectionBottomSheet {
                 onValueChanged: (dates) {},
               ),
               SizedBox(height: 2.h),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const PaymentDetailsPage()),
-                  );
-                },
-                child: const Text("Continue to Payment"),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PaymentDetailsPage()),
+                    );
+                  },
+                  style: AppTheme.lightTheme.elevatedButtonTheme.style,
+                  child: Text(
+                    "Continue to Payment",
+                    style: AppTheme.lightTheme.textTheme.labelLarge,
+                  ),
+                ),
               ),
-            ],
+          ),],
           ),
         );
       },

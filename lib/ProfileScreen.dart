@@ -231,6 +231,7 @@
 
 //---------------new code with sizer -------------------//
 import 'package:flutter/material.dart';
+import 'package:newroombooking/notification.dart';
 import 'package:sizer/sizer.dart';
 import 'package:newroombooking/theme.dart';
 
@@ -245,8 +246,36 @@ class ProfileScreen extends StatelessWidget {
       // backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        backgroundColor: Colors.white.withOpacity(0.8),
+        elevation: 0,
         title: Text("Profile", style: textTheme.titleLarge),
-        centerTitle: true,
+        actions: [
+          Stack(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.notifications_none),
+                onPressed: () {
+                  Navigator.push(context, 
+                  MaterialPageRoute(builder: (context) => NotificationScreen(),)
+                  );
+                },
+              ),
+              Positioned(
+                right: 11,
+                top: 11,
+                child: Container(
+                  height: 10,
+                  width: 10,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary2,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 2),
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
