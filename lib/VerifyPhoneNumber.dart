@@ -1,6 +1,144 @@
+// import 'package:flutter/material.dart';
+// import 'package:newroombooking/CreateAccountScreen.dart';
+// import 'package:newroombooking/theme.dart';
+
+// class OtpVerifyScreen extends StatefulWidget {
+//   final String phoneNumber;
+//   const OtpVerifyScreen({super.key, required this.phoneNumber});
+
+//   @override
+//   State<OtpVerifyScreen> createState() => _OtpVerifyScreenState();
+// }
+
+// class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
+//   final List<TextEditingController> otpControllers =
+//       List.generate(6, (_) => TextEditingController());
+
+//   @override
+//   void dispose() {
+//     for (var c in otpControllers) {
+//       c.dispose();
+//     }
+//     super.dispose();
+//   }
+
+//   Widget _buildOtpFields() {
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children: List.generate(
+//         6,
+//         (index) => Container(
+//           margin: const EdgeInsets.symmetric(horizontal: 4),
+//           width: 48,
+//           height: 56,
+//           child: TextField(
+//             controller: otpControllers[index],
+//             textAlign: TextAlign.center,
+//             keyboardType: TextInputType.number,
+//             maxLength: 1,
+//             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+//             decoration: InputDecoration(
+//               counterText: "",
+//               filled: true,
+//               fillColor: const Color(0xFFE2E8F0),
+//               enabledBorder: OutlineInputBorder(
+//                 borderRadius: BorderRadius.circular(12),
+//                 borderSide: BorderSide.none,
+//               ),
+//               focusedBorder: OutlineInputBorder(
+//                 borderRadius: BorderRadius.circular(12),
+//                 borderSide:
+//                     const BorderSide(color: AppColors.primary2, width: 2),
+//               ),
+//             ),
+//             onChanged: (val) {
+//               if (val.isNotEmpty && index < 5) {
+//                 FocusScope.of(context).nextFocus();
+//               }
+//             },
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     const Color primary = AppColors.primary2;
+//     const Color textLight = Color(0xFF0f172a);
+//     const Color subtextLight = Color(0xFF64748b);
+
+//     return Scaffold(
+//       backgroundColor: const Color(0xFFF6F7F8),
+//       body: SafeArea(
+//         child: Padding(
+//           padding: const EdgeInsets.all(24),
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               const SizedBox(height: 40),
+//               Center(
+//                 child: Column(
+//                   children: [
+//                     const Text(
+//                       "Verify your phone number",
+//                       style: TextStyle(
+//                         fontSize: 22,
+//                         fontWeight: FontWeight.bold,
+//                         color: textLight,
+//                       ),
+//                     ),
+//                     const SizedBox(height: 8),
+//                     Text(
+//                       "We sent an OTP to ${widget.phoneNumber}",
+//                       style: const TextStyle(fontSize: 14, color: subtextLight),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//               const SizedBox(height: 40),
+//               _buildOtpFields(),
+//               const SizedBox(height: 32),
+//               SizedBox(
+//                 width: double.infinity,
+//                 height: 48,
+//                 child: ElevatedButton(
+//                   onPressed: () {
+//                     // TODO: Verify OTP logic
+//                     Navigator.pushReplacement(
+//                       context,
+//                       MaterialPageRoute(
+//                           builder: (context) => const CreateAccountScreen()),
+//                     );
+//                   },
+//                   style: ElevatedButton.styleFrom(
+//                     backgroundColor: primary,
+//                     shape: RoundedRectangleBorder(
+//                       borderRadius: BorderRadius.circular(12),
+//                     ),
+//                   ),
+//                   child: const Text(
+//                     "Verify",
+//                     style: TextStyle(
+//                         fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
+//------------using sizer for reponsive------------------------------//
+
 import 'package:flutter/material.dart';
 import 'package:newroombooking/CreateAccountScreen.dart';
 import 'package:newroombooking/theme.dart';
+import 'package:sizer/sizer.dart';
 
 class OtpVerifyScreen extends StatefulWidget {
   final String phoneNumber;
@@ -16,9 +154,7 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
 
   @override
   void dispose() {
-    for (var c in otpControllers) {
-      c.dispose();
-    }
+    for (var c in otpControllers) c.dispose();
     super.dispose();
   }
 
@@ -28,25 +164,28 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
       children: List.generate(
         6,
         (index) => Container(
-          margin: const EdgeInsets.symmetric(horizontal: 4),
-          width: 48,
-          height: 56,
+          margin: EdgeInsets.symmetric(horizontal: 1.w),
+          width: 12.w,
+          height: 14.h,
           child: TextField(
             controller: otpControllers[index],
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
             maxLength: 1,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.copyWith(fontSize: 20.sp),
             decoration: InputDecoration(
               counterText: "",
               filled: true,
               fillColor: const Color(0xFFE2E8F0),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(3.w),
                 borderSide: BorderSide.none,
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(3.w),
                 borderSide:
                     const BorderSide(color: AppColors.primary2, width: 2),
               ),
@@ -64,64 +203,45 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const Color primary = AppColors.primary2;
-    const Color textLight = Color(0xFF0f172a);
-    const Color subtextLight = Color(0xFF64748b);
-
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F7F8),
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(6.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 40),
+              SizedBox(height: 3.h),
               Center(
                 child: Column(
                   children: [
-                    const Text(
+                    Text(
                       "Verify your phone number",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: textLight,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 1.h),
                     Text(
                       "We sent an OTP to ${widget.phoneNumber}",
-                      style: const TextStyle(fontSize: 14, color: subtextLight),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 40),
+              SizedBox(height: 3.h),
               _buildOtpFields(),
-              const SizedBox(height: 32),
+              // SizedBox(height: 3.h),
               SizedBox(
                 width: double.infinity,
-                height: 48,
                 child: ElevatedButton(
                   onPressed: () {
-                    // TODO: Verify OTP logic
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const CreateAccountScreen()),
+                        builder: (context) => const CreateAccountScreen(),
+                      ),
                     );
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text(
-                    "Verify",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
-                  ),
+                  child: const Text("Verify"),
                 ),
               ),
             ],

@@ -1,7 +1,918 @@
+// // import 'package:flutter/material.dart';
+// // import 'package:newroombooking/PaymentDetailsPage.dart';
+// // import 'package:newroombooking/theme.dart';
+// // import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+
+// // class RoomDetailsPage extends StatefulWidget {
+// //   const RoomDetailsPage({super.key});
+
+// //   @override
+// //   State<RoomDetailsPage> createState() => _RoomDetailsPageState();
+// // }
+
+// // class _RoomDetailsPageState extends State<RoomDetailsPage> {
+// //   String selectedCategory = "2X (26)";
+// //   int _adults = 1;
+// //   int _children = 0;
+
+// //   @override
+// //   Widget build(BuildContext context) {
+// //     return Scaffold(
+// //       backgroundColor: const Color(0xFFF8FAFC),
+// //       appBar: AppBar(
+// //         backgroundColor: Colors.white.withOpacity(0.9),
+// //         elevation: 0,
+// //         leading: IconButton(
+// //           icon: const Icon(Icons.close, color: Colors.black87),
+// //           onPressed: () => Navigator.pop(context),
+// //         ),
+// //         centerTitle: true,
+// //         title: const Text(
+// //           "Rooms",
+// //           style: TextStyle(
+// //             fontWeight: FontWeight.bold,
+// //             color: AppColors.normaltext,
+// //           ),
+// //         ),
+// //       ),
+// //       body: ListView(
+// //         padding: const EdgeInsets.only(bottom: 80), // leave space for button
+// //         children: [
+// //           // ✅ Select Rooms Category
+// //           Padding(
+// //             padding: const EdgeInsets.all(16.0),
+// //             child: Column(
+// //               crossAxisAlignment: CrossAxisAlignment.start,
+// //               children: [
+// //                 const Text(
+// //                   "Select Rooms Category",
+// //                   style: TextStyle(
+// //                     fontSize: 16,
+// //                     fontWeight: FontWeight.w600,
+// //                     color: AppColors.normaltext,
+// //                   ),
+// //                 ),
+// //                 const SizedBox(height: 12.0),
+// //                 Row(
+// //                   children: [
+// //                     _CategoryChip(
+// //                       key: const ValueKey("2X (26)"),
+// //                       label: "2X (26)",
+// //                       isSelected: selectedCategory == "2X (26)",
+// //                       onTap: () => setState(() => selectedCategory = "2X (26)"),
+// //                     ),
+// //                     const SizedBox(width: 8.0),
+// //                     _CategoryChip(
+// //                       key: const ValueKey("3X (20)"),
+// //                       label: "3X (20)",
+// //                       isSelected: selectedCategory == "3X (20)",
+// //                       onTap: () => setState(() => selectedCategory = "3X (20)"),
+// //                     ),
+// //                     const SizedBox(width: 8.0),
+// //                     _CategoryChip(
+// //                       key: const ValueKey("4X (6)"),
+// //                       label: "4X (6)",
+// //                       isSelected: selectedCategory == "4X (6)",
+// //                       onTap: () => setState(() => selectedCategory = "4X (6)"),
+// //                     ),
+// //                   ],
+// //                 ),
+// //               ],
+// //             ),
+// //           ),
+
+// //           // ✅ Room Image
+// //           Container(
+// //             height: 200,
+// //             margin: const EdgeInsets.symmetric(horizontal: 16),
+// //             decoration: BoxDecoration(
+// //               borderRadius: BorderRadius.circular(16),
+// //               image: const DecorationImage(
+// //                 fit: BoxFit.cover,
+// //                 image: NetworkImage(
+// //                   "https://lh3.googleusercontent.com/aida-public/AB6AXuA-rhMGTMGXStCZ1ydfABmaZgt20FVZQdbg6XFzeas-LmMB0B2R4CFf4XcLmUIhkl_fGqoamLsYYQ8A9q3JmNeoLzR4U3H1DCbd5xRuG7HWPf8A0XRev339EDvRZbyEdkn9TEoYNKncZEoCwi1T_OvzrhfZKBaIP59Wxjb2VYgqcFsz1pDrJb_lXLSEJGsG8XQXziRZ0OOPKwvVrjQCX3WWqON40hJlXq_7gzA4iMuMp1bM6h5qyfejg71Knfm5SZvzl2a0JrT0Wxg",
+// //                 ),
+// //               ),
+// //             ),
+// //           ),
+
+// //           const SizedBox(height: 12.0),
+
+// //           // ✅ Room Info
+// //           Padding(
+// //             padding: const EdgeInsets.symmetric(horizontal: 16.0),
+// //             child: Column(
+// //               crossAxisAlignment: CrossAxisAlignment.start,
+// //               children: [
+// //                 Text(
+// //                   selectedCategory,
+// //                   style: const TextStyle(
+// //                     fontSize: 18,
+// //                     fontWeight: FontWeight.bold,
+// //                     color: AppColors.normaltext,
+// //                   ),
+// //                 ),
+// //                 const SizedBox(height: 4.0),
+// //                 Row(
+// //                   children: const [
+// //                     Icon(Icons.people, color: Colors.green, size: 18),
+// //                     SizedBox(width: 6),
+// //                     Text(
+// //                       "26 rooms left",
+// //                       style: TextStyle(color: Colors.green, fontSize: 14),
+// //                     ),
+// //                   ],
+// //                 ),
+// //                 const SizedBox(height: 8.0),
+// //                 const Text(
+// //                   "No more than 3 Guests",
+// //                   style: TextStyle(fontSize: 14, color: Colors.grey),
+// //                 ),
+// //               ],
+// //             ),
+// //           ),
+
+// //           const SizedBox(height: 16.0),
+
+// //           // ✅ Room Tariff
+// //           Padding(
+// //             padding: const EdgeInsets.symmetric(horizontal: 14.0),
+// //             child: Column(
+// //               crossAxisAlignment: CrossAxisAlignment.start,
+// //               children: [
+// //                 const Text(
+// //                   "Room Tariff",
+// //                   style: TextStyle(
+// //                     fontSize: 16,
+// //                     fontWeight: FontWeight.bold,
+// //                     color: AppColors.normaltext,
+// //                   ),
+// //                 ),
+// //                 const SizedBox(height: 10.0),
+// //                 IntrinsicHeight(
+// //                   child: Row(
+// //                     children: [
+// //                       Expanded(
+// //                         child: _TariffTile(title: "Single Person", price: "999.00"),
+// //                       ),
+// //                       const SizedBox(width: 8.0),
+// //                       Expanded(
+// //                         child: _TariffTile(title: "Double Person", price: "1300.00"),
+// //                       ),
+// //                       const SizedBox(width: 8.0),
+// //                       Expanded(
+// //                         child: _TariffTile(title: "Triple  Person", price: "1600.00"),
+// //                       ),
+// //                     ],
+// //                   ),
+// //                 ),
+// //                 const SizedBox(height: 20.0),
+
+// //                 // ✅ Guest Selection
+// //                 Container(
+// //                   padding: const EdgeInsets.all(12.0),
+// //                   decoration: BoxDecoration(
+// //                     color: Colors.white,
+// //                     borderRadius: BorderRadius.circular(12.0),
+// //                     border: Border.all(color: Colors.grey.shade300),
+// //                   ),
+// //                   child: Column(
+// //                     crossAxisAlignment: CrossAxisAlignment.start,
+// //                     children: [
+// //                       const Text(
+// //                         "Guests",
+// //                         style: TextStyle(
+// //                           fontSize: 16,
+// //                           fontWeight: FontWeight.bold,
+// //                           color: AppColors.normaltext,
+// //                         ),
+// //                       ),
+// //                       const SizedBox(height: 12.0),
+
+// //                       // Adults Selector
+// //                       Row(
+// //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+// //                         children: [
+// //                           const Text(
+// //                             "Adults",
+// //                             style: TextStyle(
+// //                                 fontSize: 14,
+// //                                 fontWeight: FontWeight.w600,
+// //                                 color: AppColors.normaltext),
+// //                           ),
+// //                           Row(
+// //                             children: [
+// //                               IconButton(
+// //                                 onPressed: () {
+// //                                   setState(() {
+// //                                     if (_adults > 1) _adults--;
+// //                                   });
+// //                                 },
+// //                                 icon: const Icon(Icons.remove_circle_outline),
+// //                               ),
+// //                               Text(
+// //                                 "$_adults",
+// //                                 style: const TextStyle(
+// //                                     fontSize: 16, fontWeight: FontWeight.bold),
+// //                               ),
+// //                               IconButton(
+// //                                 onPressed: () {
+// //                                   setState(() {
+// //                                     _adults++;
+// //                                   });
+// //                                 },
+// //                                 icon: const Icon(Icons.add_circle_outline),
+// //                               ),
+// //                             ],
+// //                           ),
+// //                         ],
+// //                       ),
+
+// //                       const Divider(),
+
+// //                       // Children Selector
+// //                       Row(
+// //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+// //                         children: [
+// //                           const Text(
+// //                             "Children",
+// //                             style: TextStyle(
+// //                                 fontSize: 14,
+// //                                 fontWeight: FontWeight.w600,
+// //                                 color: AppColors.normaltext),
+// //                           ),
+// //                           Row(
+// //                             children: [
+// //                               IconButton(
+// //                                 onPressed: () {
+// //                                   setState(() {
+// //                                     if (_children > 0) _children--;
+// //                                   });
+// //                                 },
+// //                                 icon: const Icon(Icons.remove_circle_outline),
+// //                               ),
+// //                               Text(
+// //                                 "$_children",
+// //                                 style: const TextStyle(
+// //                                     fontSize: 16, fontWeight: FontWeight.bold),
+// //                               ),
+// //                               IconButton(
+// //                                 onPressed: () {
+// //                                   setState(() {
+// //                                     _children++;
+// //                                   });
+// //                                 },
+// //                                 icon: const Icon(Icons.add_circle_outline),
+// //                               ),
+// //                             ],
+// //                           ),
+// //                         ],
+// //                       ),
+// //                     ],
+// //                   ),
+// //                 ),
+// //               ],
+// //             ),
+// //           ),
+
+// //           const SizedBox(height: 12.0),
+
+// //           // ✅ Amenities
+// //           Padding(
+// //             padding: const EdgeInsets.symmetric(horizontal: 16.0),
+// //             child: Column(
+// //               crossAxisAlignment: CrossAxisAlignment.start,
+// //               children: [
+// //                 const Text(
+// //                   "Amenities",
+// //                   style: TextStyle(
+// //                     fontSize: 16,
+// //                     fontWeight: FontWeight.bold,
+// //                     color: AppColors.normaltext,
+// //                   ),
+// //                 ),
+// //                 const SizedBox(height: 12.0),
+// //                 Wrap(
+// //                   spacing: 12.0,
+// //                   runSpacing: 12.0,
+// //                   children: const [
+// //                     AmenityTile(icon: Icons.wifi, title: "Wifi"),
+// //                     AmenityTile(icon: Icons.local_parking, title: "Parking"),
+// //                     AmenityTile(icon: Icons.local_laundry_service, title: "Laundry"),
+// //                     AmenityTile(icon: Icons.free_breakfast, title: "Bed Tea / Breakfast"),
+// //                   ],
+// //                 ),
+// //               ],
+// //             ),
+// //           ),
+// //         ],
+// //       ),
+
+// //       // ✅ Sticky Bottom Button
+// //       bottomNavigationBar: Padding(
+// //         padding: const EdgeInsets.all(16.0),
+// //         child: ElevatedButton(
+// //           style: ElevatedButton.styleFrom(
+// //             backgroundColor: AppColors.primary2,
+// //             minimumSize: const Size(double.infinity, 52),
+// //             shape: RoundedRectangleBorder(
+// //               borderRadius: BorderRadius.circular(12.0),
+// //             ),
+// //           ),
+// //           onPressed: () {
+// //             DateSelectionBottomSheet.show(context);
+// //           },
+// //           child: const Text(
+// //             "Book Now",
+// //             style: TextStyle(
+// //               fontSize: 18,
+// //               fontWeight: FontWeight.bold,
+// //               color: Colors.white,
+// //             ),
+// //           ),
+// //         ),
+// //       ),
+// //     );
+// //   }
+// // }
+
+// // // ✅ Category Chip
+// // class _CategoryChip extends StatelessWidget {
+// //   final String label;
+// //   final bool isSelected;
+// //   final VoidCallback onTap;
+
+// //   const _CategoryChip({
+// //     required this.label,
+// //     required this.isSelected,
+// //     required this.onTap,
+// //     super.key,
+// //   });
+
+// //   @override
+// //   Widget build(BuildContext context) {
+// //     return GestureDetector(
+// //       onTap: onTap,
+// //       child: Container(
+// //         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+// //         decoration: BoxDecoration(
+// //           color: isSelected ? AppColors.primary2 : Colors.white,
+// //           borderRadius: BorderRadius.circular(8.0),
+// //           border: Border.all(
+// //             color: isSelected ? AppColors.primary2 : Colors.grey.shade300,
+// //           ),
+// //         ),
+// //         child: Text(
+// //           label,
+// //           style: TextStyle(
+// //             fontSize: 14,
+// //             fontWeight: FontWeight.w600,
+// //             color: isSelected ? Colors.white : AppColors.normaltext,
+// //           ),
+// //         ),
+// //       ),
+// //     );
+// //   }
+// // }
+
+// // // ✅ Tariff Tile
+// // class _TariffTile extends StatelessWidget {
+// //   final String title;
+// //   final String price;
+
+// //   const _TariffTile({required this.title, required this.price, super.key});
+
+// //   @override
+// //   Widget build(BuildContext context) {
+// //     return Container(
+// //       padding: const EdgeInsets.all(12.0),
+// //       decoration: BoxDecoration(
+// //         border: Border.all(color: Colors.grey.shade300),
+// //         borderRadius: BorderRadius.circular(8.0),
+// //         color: Colors.white,
+// //       ),
+// //       child: Column(
+// //         children: [
+// //           Text(
+// //             title,
+// //             textAlign: TextAlign.center,
+// //             style: const TextStyle(
+// //                 fontSize: 14,
+// //                 fontWeight: FontWeight.w600,
+// //                 color: AppColors.normaltext),
+// //           ),
+// //           const SizedBox(height: 6.0),
+// //           Text(
+// //             "₹$price",
+// //             style: const TextStyle(
+// //                 fontSize: 14,
+// //                 fontWeight: FontWeight.bold,
+// //                 color: AppColors.primary2),
+// //           ),
+// //         ],
+// //       ),
+// //     );
+// //   }
+// // }
+
+// // // ✅ Amenity Tile
+// // class AmenityTile extends StatelessWidget {
+// //   final IconData icon;
+// //   final String title;
+
+// //   const AmenityTile({super.key, required this.icon, required this.title});
+
+// //   @override
+// //   Widget build(BuildContext context) {
+// //     return Container(
+// //       padding: const EdgeInsets.all(12.0),
+// //       decoration: BoxDecoration(
+// //         color: Colors.white,
+// //         borderRadius: BorderRadius.circular(12.0),
+// //         boxShadow: [
+// //           BoxShadow(
+// //             blurRadius: 4,
+// //             color: Colors.black12.withOpacity(0.05),
+// //           )
+// //         ],
+// //       ),
+// //       child: Row(
+// //         mainAxisSize: MainAxisSize.min,
+// //         children: [
+// //           Icon(icon, color: AppColors.primary2),
+// //           const SizedBox(width: 8.0),
+// //           Text(
+// //             title,
+// //             style: const TextStyle(
+// //               fontWeight: FontWeight.w600,
+// //               fontSize: 14,
+// //               color: AppColors.normaltext,
+// //             ),
+// //           ),
+// //         ],
+// //       ),
+// //     );
+// //   }
+// // }
+
+// // // ✅ Date Selection Bottom Sheet
+// // class DateSelectionBottomSheet {
+// //   static void show(BuildContext context) {
+// //     showModalBottomSheet(
+// //       context: context,
+// //       isScrollControlled: true,
+// //       shape: const RoundedRectangleBorder(
+// //         borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+// //       ),
+// //       builder: (context) {
+// //         return Padding(
+// //           padding: const EdgeInsets.all(16.0),
+// //           child: Column(
+// //             mainAxisSize: MainAxisSize.min,
+// //             children: [
+// //               const Text(
+// //                 "Select Dates",
+// //                 style: TextStyle(
+// //                   fontWeight: FontWeight.bold,
+// //                   fontSize: 18,
+// //                   color: AppColors.normaltext,
+// //                 ),
+// //               ),
+// //               const SizedBox(height: 16.0),
+// //               CalendarDatePicker2(
+// //                 config: CalendarDatePicker2Config(
+// //                   calendarType: CalendarDatePicker2Type.range,
+// //                 ),
+// //                 value: [],
+// //                 onValueChanged: (dates) {},
+// //               ),
+// //               const SizedBox(height: 16.0),
+// //               ElevatedButton(
+// //                 style: ElevatedButton.styleFrom(
+// //                   backgroundColor: AppColors.primary2,
+// //                   minimumSize: const Size(double.infinity, 52),
+
+// //                 ),
+// //                 onPressed: () {
+// //                   Navigator.pop(context);
+// //                   Navigator.push(
+// //                     context,
+// //                     MaterialPageRoute(
+// //                       builder: (context) => const PaymentDetailsPage(),
+// //                     ),
+// //                   );
+// //                 },
+// //                 child: const Text("Continue to Payment" ,style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),),
+
+// //               ),
+// //             ],
+// //           ),
+// //         );
+// //       },
+// //     );
+// //   }
+// // }
+
+// //------------new code with sizer ----------------//
+
+// import 'package:flutter/material.dart';
+// import 'package:newroombooking/PaymentDetailsPage.dart';
+// import 'package:newroombooking/theme.dart';
+// import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+// import 'package:sizer/sizer.dart';
+
+// class RoomDetailsPage extends StatefulWidget {
+//   const RoomDetailsPage({super.key});
+
+//   @override
+//   State<RoomDetailsPage> createState() => _RoomDetailsPageState();
+// }
+
+// class _RoomDetailsPageState extends State<RoomDetailsPage> {
+//   String selectedCategory = "2X (26)";
+//   int _adults = 1;
+//   int _children = 0;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final textTheme = Theme.of(context).textTheme;
+
+//     return Scaffold(
+//       backgroundColor: AppColors.background,
+//       appBar: AppBar(
+//         backgroundColor: Colors.white.withOpacity(0.9),
+//         elevation: 0,
+//         leading: IconButton(
+//           icon: const Icon(Icons.close, color: Colors.black87),
+//           onPressed: () => Navigator.pop(context),
+//         ),
+//         centerTitle: true,
+//         title: Text(
+//           "Rooms",
+//           style: textTheme.titleLarge,
+//         ),
+//       ),
+//       body: ListView(
+//         padding: EdgeInsets.only(bottom: 10.h),
+//         children: [
+//           // Select Rooms Category
+//           Padding(
+//             padding: EdgeInsets.all(4.w),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text("Select Rooms Category", style: textTheme.labelMedium),
+//                 SizedBox(height: 2.h),
+//                 Row(
+//                   children: [
+//                     _CategoryChip(
+//                       label: "2X (26)",
+//                       isSelected: selectedCategory == "2X (26)",
+//                       onTap: () => setState(() => selectedCategory = "2X (26)"),
+//                     ),
+//                     SizedBox(width: 2.w),
+//                     _CategoryChip(
+//                       label: "3X (20)",
+//                       isSelected: selectedCategory == "3X (20)",
+//                       onTap: () => setState(() => selectedCategory = "3X (20)"),
+//                     ),
+//                     SizedBox(width: 2.w),
+//                     _CategoryChip(
+//                       label: "4X (6)",
+//                       isSelected: selectedCategory == "4X (6)",
+//                       onTap: () => setState(() => selectedCategory = "4X (6)"),
+//                     ),
+//                   ],
+//                 ),
+//               ],
+//             ),
+//           ),
+
+//           // Room Image
+//           Container(
+//             height: 25.h,
+//             margin: EdgeInsets.symmetric(horizontal: 4.w),
+//             decoration: BoxDecoration(
+//               borderRadius: BorderRadius.circular(4.w),
+//               image: const DecorationImage(
+//                 fit: BoxFit.cover,
+//                 image: NetworkImage(
+//                   "https://lh3.googleusercontent.com/aida-public/AB6AXuA-rhMGTMGXStCZ1ydfABmaZgt20FVZQdbg6XFzeas-LmMB0B2R4CFf4XcLmUIhkl_fGqoamLsYYQ8A9q3JmNeoLzR4U3H1DCbd5xRuG7HWPf8A0XRev339EDvRZbyEdkn9TEoYNKncZEoCwi1T_OvzrhfZKBaIP59Wxjb2VYgqcFsz1pDrJb_lXLSEJGsG8XQXziRZ0OOPKwvVrjQCX3WWqON40hJlXq_7gzA4iMuMp1bM6h5qyfejg71Knfm5SZvzl2a0JrT0Wxg",
+//                 ),
+//               ),
+//             ),
+//           ),
+
+//           SizedBox(height: 2.h),
+
+//           // Room Info
+//           Padding(
+//             padding: EdgeInsets.symmetric(horizontal: 4.w),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text(selectedCategory, style: textTheme.labelMedium),
+//                 SizedBox(height: 0.5.h),
+//                 Row(
+//                   children: [
+//                     Icon(Icons.people, color: Colors.green, size: 2.2.h),
+//                     SizedBox(width: 2.w),
+//                     Text("26 rooms left",
+//                         style: textTheme.bodyLarge?.copyWith(color: Colors.green)),
+//                   ],
+//                 ),
+//                 SizedBox(height: 1.h),
+//                 Text("No more than 3 Guests", style: textTheme.bodyMedium),
+//               ],
+//             ),
+//           ),
+
+//           SizedBox(height: 2.h),
+
+//           // Room Tariff
+//           Padding(
+//             padding: EdgeInsets.symmetric(horizontal: 3.5.w),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text("Room Tariff", style: textTheme.labelMedium),
+//                 SizedBox(height: 1.5.h),
+//                 IntrinsicHeight(
+//                   child: Row(
+//                     children: [
+//                       Expanded(child: _TariffTile(title: "Single Person", price: "999.00")),
+//                       SizedBox(width: 2.w),
+//                       Expanded(child: _TariffTile(title: "Double Person", price: "1300.00")),
+//                       SizedBox(width: 2.w),
+//                       Expanded(child: _TariffTile(title: "Triple Person", price: "1600.00")),
+//                     ],
+//                   ),
+//                 ),
+//                 SizedBox(height: 3.h),
+
+//                 // Guest Selection
+//                 Container(
+//                   padding: EdgeInsets.all(3.w),
+//                   decoration: BoxDecoration(
+//                     color: Colors.white,
+//                     borderRadius: BorderRadius.circular(3.w),
+//                     border: Border.all(color: Colors.grey.shade300),
+//                   ),
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       Text("Guests", style: textTheme.labelMedium),
+//                       SizedBox(height: 2.h),
+
+//                       // Adults
+//                       Row(
+//                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                         children: [
+//                           Text("Adults", style: textTheme.bodyLarge),
+//                           Row(
+//                             children: [
+//                               IconButton(
+//                                 onPressed: () { if (_adults > 1) setState(() => _adults--); },
+//                                 icon: Icon(Icons.remove_circle_outline, size: 3.h),
+//                               ),
+//                               Text("$_adults", style: textTheme.labelMedium),
+//                               IconButton(
+//                                 onPressed: () => setState(() => _adults++),
+//                                 icon: Icon(Icons.add_circle_outline, size: 3.h),
+//                               ),
+//                             ],
+//                           ),
+//                         ],
+//                       ),
+//                       Divider(),
+
+//                       // Children
+//                       Row(
+//                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                         children: [
+//                           Text("Children", style: textTheme.bodyLarge),
+//                           Row(
+//                             children: [
+//                               IconButton(
+//                                 onPressed: () { if (_children > 0) setState(() => _children--); },
+//                                 icon: Icon(Icons.remove_circle_outline, size: 3.h),
+//                               ),
+//                               Text("$_children", style: textTheme.labelMedium),
+//                               IconButton(
+//                                 onPressed: () => setState(() => _children++),
+//                                 icon: Icon(Icons.add_circle_outline, size: 3.h),
+//                               ),
+//                             ],
+//                           ),
+//                         ],
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+
+//           SizedBox(height: 2.h),
+
+//           // Amenities
+//           Padding(
+//             padding: EdgeInsets.symmetric(horizontal: 4.w),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Text("Amenities", style: textTheme.labelMedium),
+//                 SizedBox(height: 2.h),
+//                 Wrap(
+//                   spacing: 3.w,
+//                   runSpacing: 2.h,
+//                   children: const [
+//                     AmenityTile(icon: Icons.wifi, title: "Wifi"),
+//                     AmenityTile(icon: Icons.local_parking, title: "Parking"),
+//                     AmenityTile(icon: Icons.local_laundry_service, title: "Laundry"),
+//                     AmenityTile(icon: Icons.free_breakfast, title: "Bed Tea / Breakfast"),
+//                   ],
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+
+//       // Bottom Button
+//       bottomNavigationBar: Padding(
+//         padding: EdgeInsets.all(4.w),
+//         child: ElevatedButton(
+//           style: ElevatedButton.styleFrom(
+//             backgroundColor: AppColors.primary2,
+//             minimumSize: Size(double.infinity, 7.h),
+//             shape: RoundedRectangleBorder(
+//               borderRadius: BorderRadius.circular(3.w),
+//             ),
+//           ),
+//           onPressed: () { DateSelectionBottomSheet.show(context); },
+//           child: Text("Book Now", style: textTheme.labelLarge),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// // Category Chip
+// class _CategoryChip extends StatelessWidget {
+//   final String label;
+//   final bool isSelected;
+//   final VoidCallback onTap;
+
+//   const _CategoryChip({required this.label, required this.isSelected, required this.onTap, super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final textTheme = Theme.of(context).textTheme;
+//     return GestureDetector(
+//       onTap: onTap,
+//       child: Container(
+//         padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.5.h),
+//         decoration: BoxDecoration(
+//           color: isSelected ? AppColors.primary2 : Colors.white,
+//           borderRadius: BorderRadius.circular(2.w),
+//           border: Border.all(color: isSelected ? AppColors.primary2 : Colors.grey.shade300),
+//         ),
+//         child: Text(
+//           label,
+//           style: textTheme.bodyLarge?.copyWith(
+//               color: isSelected ? Colors.white : AppColors.normaltext,
+//               fontWeight: FontWeight.w600,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// // Tariff Tile
+// class _TariffTile extends StatelessWidget {
+//   final String title;
+//   final String price;
+//   const _TariffTile({required this.title, required this.price, super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final textTheme = Theme.of(context).textTheme;
+//     return Container(
+//       padding: EdgeInsets.all(3.w),
+//       decoration: BoxDecoration(
+//         border: Border.all(color: Colors.grey.shade300),
+//         borderRadius: BorderRadius.circular(2.w),
+//         color: Colors.white,
+//       ),
+//       child: Column(
+//         children: [
+//           Text(title, textAlign: TextAlign.center, style: textTheme.bodyLarge),
+//           SizedBox(height: 1.h),
+//           Text("₹$price", style: textTheme.labelMedium?.copyWith(color: AppColors.primary2)),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// // Amenity Tile
+// class AmenityTile extends StatelessWidget {
+//   final IconData icon;
+//   final String title;
+//   const AmenityTile({super.key, required this.icon, required this.title});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final textTheme = Theme.of(context).textTheme;
+//     return Container(
+//       padding: EdgeInsets.all(3.w),
+//       decoration: BoxDecoration(
+//         color: Colors.white,
+//         borderRadius: BorderRadius.circular(3.w),
+//         boxShadow: [BoxShadow(blurRadius: 4, color: Colors.black12.withOpacity(0.05))],
+//       ),
+//       child: Row(
+//         mainAxisSize: MainAxisSize.min,
+//         children: [
+//           Icon(icon, color: AppColors.primary2, size: 3.h),
+//           SizedBox(width: 2.w),
+//           Text(title, style: textTheme.bodyLarge),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+// // Date Selection Bottom Sheet
+// class DateSelectionBottomSheet {
+//   static void show(BuildContext context) {
+//     showModalBottomSheet(
+//       context: context,
+//       isScrollControlled: true,
+//       shape: const RoundedRectangleBorder(
+//         borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+//       ),
+//       builder: (context) {
+//         return Padding(
+//           padding: const EdgeInsets.all(16.0),
+//           child: Column(
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               const Text(
+//                 "Select Dates",
+//                 style: TextStyle(
+//                   fontWeight: FontWeight.bold,
+//                   fontSize: 18,
+//                   color: AppColors.normaltext,
+//                 ),
+//               ),
+//               const SizedBox(height: 16.0),
+//               CalendarDatePicker2(
+//                 config: CalendarDatePicker2Config(
+//                   calendarType: CalendarDatePicker2Type.range,
+//                 ),
+//                 value: [],
+//                 onValueChanged: (dates) {},
+//               ),
+//               const SizedBox(height: 16.0),
+//               ElevatedButton(
+//                 style: ElevatedButton.styleFrom(
+//                   backgroundColor: AppColors.primary2,
+//                   minimumSize: const Size(double.infinity, 52),
+//                 ),
+//                 onPressed: () {
+//                   Navigator.pop(context);
+//                   Navigator.push(
+//                     context,
+//                     MaterialPageRoute(
+//                       builder: (context) => const PaymentDetailsPage(),
+//                     ),
+//                   );
+//                 },
+//                 child: const Text(
+//                   "Continue to Payment",
+//                   style: TextStyle(
+//                     fontSize: 18,
+//                     color: Colors.white,
+//                     fontWeight: FontWeight.bold,
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }
+
 import 'package:flutter/material.dart';
 import 'package:newroombooking/PaymentDetailsPage.dart';
 import 'package:newroombooking/theme.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+import 'package:sizer/sizer.dart';
 
 class RoomDetailsPage extends StatefulWidget {
   const RoomDetailsPage({super.key});
@@ -17,8 +928,10 @@ class _RoomDetailsPageState extends State<RoomDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: Colors.white.withOpacity(0.9),
         elevation: 0,
@@ -27,245 +940,137 @@ class _RoomDetailsPageState extends State<RoomDetailsPage> {
           onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
-        title: const Text(
-          "Rooms",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: AppColors.normaltext,
-          ),
-        ),
+        title: Text("Rooms", style: textTheme.titleLarge),
       ),
       body: ListView(
-        padding: const EdgeInsets.only(bottom: 80), // leave space for button
+        padding: EdgeInsets.only(bottom: 10.h),
         children: [
-          // ✅ Select Rooms Category
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(4.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Select Rooms Category",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.normaltext,
-                  ),
-                ),
-                const SizedBox(height: 12.0),
+                Text("Select Rooms Category", style: textTheme.labelMedium),
+                SizedBox(height: 2.h),
                 Row(
                   children: [
                     _CategoryChip(
-                      key: const ValueKey("2X (26)"),
-                      label: "2X (26)",
-                      isSelected: selectedCategory == "2X (26)",
-                      onTap: () => setState(() => selectedCategory = "2X (26)"),
-                    ),
-                    const SizedBox(width: 8.0),
+                        label: "2X (26)",
+                        isSelected: selectedCategory == "2X (26)",
+                        onTap: () =>
+                            setState(() => selectedCategory = "2X (26)")),
+                    SizedBox(width: 2.w),
                     _CategoryChip(
-                      key: const ValueKey("3X (20)"),
-                      label: "3X (20)",
-                      isSelected: selectedCategory == "3X (20)",
-                      onTap: () => setState(() => selectedCategory = "3X (20)"),
-                    ),
-                    const SizedBox(width: 8.0),
+                        label: "3X (20)",
+                        isSelected: selectedCategory == "3X (20)",
+                        onTap: () =>
+                            setState(() => selectedCategory = "3X (20)")),
+                    SizedBox(width: 2.w),
                     _CategoryChip(
-                      key: const ValueKey("4X (6)"),
-                      label: "4X (6)",
-                      isSelected: selectedCategory == "4X (6)",
-                      onTap: () => setState(() => selectedCategory = "4X (6)"),
-                    ),
+                        label: "4X (6)",
+                        isSelected: selectedCategory == "4X (6)",
+                        onTap: () =>
+                            setState(() => selectedCategory = "4X (6)")),
                   ],
                 ),
               ],
             ),
           ),
-
-          // ✅ Room Image
           Container(
-            height: 200,
-            margin: const EdgeInsets.symmetric(horizontal: 16),
+            height: 25.h,
+            margin: EdgeInsets.symmetric(horizontal: 4.w),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(4.w),
               image: const DecorationImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(
-                  "https://lh3.googleusercontent.com/aida-public/AB6AXuA-rhMGTMGXStCZ1ydfABmaZgt20FVZQdbg6XFzeas-LmMB0B2R4CFf4XcLmUIhkl_fGqoamLsYYQ8A9q3JmNeoLzR4U3H1DCbd5xRuG7HWPf8A0XRev339EDvRZbyEdkn9TEoYNKncZEoCwi1T_OvzrhfZKBaIP59Wxjb2VYgqcFsz1pDrJb_lXLSEJGsG8XQXziRZ0OOPKwvVrjQCX3WWqON40hJlXq_7gzA4iMuMp1bM6h5qyfejg71Knfm5SZvzl2a0JrT0Wxg",
-                ),
+                    "https://lh3.googleusercontent.com/aida-public/AB6AXuA-rhMGTMGXStCZ1ydfABmaZgt20FVZQdbg6XFzeas-LmMB0B2R4CFf4XcLmUIhkl_fGqoamLsYYQ8A9q3JmNeoLzR4U3H1DCbd5xRuG7HWPf8A0XRev339EDvRZbyEdkn9TEoYNKncZEoCwi1T_OvzrhfZKBaIP59Wxjb2VYgqcFsz1pDrJb_lXLSEJGsG8XQXziRZ0OOPKwvVrjQCX3WWqON40hJlXq_7gzA4iMuMp1bM6h5qyfejg71Knfm5SZvzl2a0JrT0Wxg"),
               ),
             ),
           ),
-
-          const SizedBox(height: 12.0),
-
-          // ✅ Room Info
+          SizedBox(height: 2.h),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: EdgeInsets.symmetric(horizontal: 4.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  selectedCategory,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.normaltext,
-                  ),
-                ),
-                const SizedBox(height: 4.0),
+                Text(selectedCategory, style: textTheme.labelMedium),
+                SizedBox(height: 0.5.h),
                 Row(
-                  children: const [
-                    Icon(Icons.people, color: Colors.green, size: 18),
-                    SizedBox(width: 6),
-                    Text(
-                      "26 rooms left",
-                      style: TextStyle(color: Colors.green, fontSize: 14),
-                    ),
+                  children: [
+                    Icon(Icons.people, color: Colors.green, size: 2.2.h),
+                    SizedBox(width: 2.w),
+                    Text("26 rooms left",
+                        style:
+                            textTheme.bodyLarge?.copyWith(color: Colors.green)),
                   ],
                 ),
-                const SizedBox(height: 8.0),
-                const Text(
-                  "No more than 3 Guests",
-                  style: TextStyle(fontSize: 14, color: Colors.grey),
-                ),
+                SizedBox(height: 1.h),
+                Text("No more than 3 Guests", style: textTheme.bodyMedium),
               ],
             ),
           ),
-
-          const SizedBox(height: 16.0),
-
-          // ✅ Room Tariff
+          SizedBox(height: 2.h),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14.0),
+            padding: EdgeInsets.symmetric(horizontal: 3.5.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Room Tariff",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.normaltext,
-                  ),
-                ),
-                const SizedBox(height: 10.0),
+                Text("Room Tariff", style: textTheme.labelMedium),
+                SizedBox(height: 1.5.h),
                 IntrinsicHeight(
                   child: Row(
                     children: [
                       Expanded(
-                        child: _TariffTile(title: "Single Person", price: "999.00"),
-                      ),
-                      const SizedBox(width: 8.0),
+                          child: _TariffTile(
+                              title: "Single Person", price: "999")),
+                      SizedBox(width: 2.w),
                       Expanded(
-                        child: _TariffTile(title: "Double Person", price: "1300.00"),
-                      ),
-                      const SizedBox(width: 8.0),
+                          child: _TariffTile(
+                              title: "Double Person", price: "1300")),
+                      SizedBox(width: 2.w),
                       Expanded(
-                        child: _TariffTile(title: "Triple  Person", price: "1600.00"),
-                      ),
+                          child: _TariffTile(
+                              title: "Triple Person", price: "1600")),
                     ],
                   ),
                 ),
-                const SizedBox(height: 20.0),
-
-                // ✅ Guest Selection
+                SizedBox(height: 3.h),
                 Container(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: EdgeInsets.all(3.w),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(3.w),
                     border: Border.all(color: Colors.grey.shade300),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Guests",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.normaltext,
-                        ),
-                      ),
-                      const SizedBox(height: 12.0),
-
-                      // Adults Selector
+                      Text("Guests", style: textTheme.labelMedium),
+                      SizedBox(height: 2.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Adults",
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.normaltext),
-                          ),
-                          Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    if (_adults > 1) _adults--;
-                                  });
-                                },
-                                icon: const Icon(Icons.remove_circle_outline),
-                              ),
-                              Text(
-                                "$_adults",
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _adults++;
-                                  });
-                                },
-                                icon: const Icon(Icons.add_circle_outline),
-                              ),
-                            ],
-                          ),
+                          Text("Adults", style: textTheme.bodyLarge),
+                          _CounterRow(
+                              value: _adults,
+                              onAdd: () => setState(() => _adults++),
+                              onRemove: () {
+                                if (_adults > 1) setState(() => _adults--);
+                              }),
                         ],
                       ),
-
                       const Divider(),
-
-                      // Children Selector
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Children",
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.normaltext),
-                          ),
-                          Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    if (_children > 0) _children--;
-                                  });
-                                },
-                                icon: const Icon(Icons.remove_circle_outline),
-                              ),
-                              Text(
-                                "$_children",
-                                style: const TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _children++;
-                                  });
-                                },
-                                icon: const Icon(Icons.add_circle_outline),
-                              ),
-                            ],
-                          ),
+                          Text("Children", style: textTheme.bodyLarge),
+                          _CounterRow(
+                              value: _children,
+                              onAdd: () => setState(() => _children++),
+                              onRemove: () {
+                                if (_children > 0) setState(() => _children--);
+                              }),
                         ],
                       ),
                     ],
@@ -274,32 +1079,25 @@ class _RoomDetailsPageState extends State<RoomDetailsPage> {
               ],
             ),
           ),
-
-          const SizedBox(height: 12.0),
-
-          // ✅ Amenities
+          SizedBox(height: 2.h),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: EdgeInsets.symmetric(horizontal: 4.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Amenities",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.normaltext,
-                  ),
-                ),
-                const SizedBox(height: 12.0),
+                Text("Amenities", style: textTheme.labelMedium),
+                SizedBox(height: 2.h),
                 Wrap(
-                  spacing: 12.0,
-                  runSpacing: 12.0,
+                  spacing: 3.w,
+                  runSpacing: 2.h,
                   children: const [
                     AmenityTile(icon: Icons.wifi, title: "Wifi"),
                     AmenityTile(icon: Icons.local_parking, title: "Parking"),
-                    AmenityTile(icon: Icons.local_laundry_service, title: "Laundry"),
-                    AmenityTile(icon: Icons.free_breakfast, title: "Bed Tea / Breakfast"),
+                    AmenityTile(
+                        icon: Icons.local_laundry_service, title: "Laundry"),
+                    AmenityTile(
+                        icon: Icons.free_breakfast,
+                        title: "Bed Tea / Breakfast"),
                   ],
                 ),
               ],
@@ -307,178 +1105,154 @@ class _RoomDetailsPageState extends State<RoomDetailsPage> {
           ),
         ],
       ),
-
-      // ✅ Sticky Bottom Button
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(4.w),
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primary2,
-            minimumSize: const Size(double.infinity, 52),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-          ),
-          onPressed: () {
-            DateSelectionBottomSheet.show(context);
-          },
-          child: const Text(
-            "Book Now",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
+          onPressed: () => DateSelectionBottomSheet.show(context),
+          child: const Text("Book Now"),
         ),
       ),
     );
   }
 }
 
-// ✅ Category Chip
 class _CategoryChip extends StatelessWidget {
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
 
-  const _CategoryChip({
-    required this.label,
-    required this.isSelected,
-    required this.onTap,
-    super.key,
-  });
+  const _CategoryChip(
+      {required this.label,
+      required this.isSelected,
+      required this.onTap,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.5.h),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.primary2 : Colors.white,
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(2.w),
           border: Border.all(
-            color: isSelected ? AppColors.primary2 : Colors.grey.shade300,
-          ),
+              color: isSelected ? AppColors.primary2 : Colors.grey.shade300),
         ),
         child: Text(
           label,
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: isSelected ? Colors.white : AppColors.normaltext,
-          ),
+          style: textTheme.bodyLarge?.copyWith(
+              color: isSelected ? Colors.white : AppColors.normaltext,
+              fontWeight: FontWeight.w600),
         ),
       ),
     );
   }
 }
 
-// ✅ Tariff Tile
 class _TariffTile extends StatelessWidget {
   final String title;
   final String price;
-
   const _TariffTile({required this.title, required this.price, super.key});
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Container(
-      padding: const EdgeInsets.all(12.0),
+      padding: EdgeInsets.all(3.w),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade300),
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(2.w),
         color: Colors.white,
       ),
       child: Column(
         children: [
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: AppColors.normaltext),
-          ),
-          const SizedBox(height: 6.0),
-          Text(
-            "₹$price",
-            style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: AppColors.primary2),
-          ),
+          Text(title, textAlign: TextAlign.center, style: textTheme.bodyLarge),
+          SizedBox(height: 1.h),
+          Text("₹$price",
+              style:
+                  textTheme.labelMedium?.copyWith(color: AppColors.primary2)),
         ],
       ),
     );
   }
 }
 
-// ✅ Amenity Tile
 class AmenityTile extends StatelessWidget {
   final IconData icon;
   final String title;
-
   const AmenityTile({super.key, required this.icon, required this.title});
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Container(
-      padding: const EdgeInsets.all(12.0),
+      padding: EdgeInsets.all(3.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(3.w),
         boxShadow: [
-          BoxShadow(
-            blurRadius: 4,
-            color: Colors.black12.withOpacity(0.05),
-          )
+          BoxShadow(blurRadius: 4, color: Colors.black12.withOpacity(0.05))
         ],
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: AppColors.primary2),
-          const SizedBox(width: 8.0),
-          Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
-              color: AppColors.normaltext,
-            ),
-          ),
+          Icon(icon, color: AppColors.primary2, size: 3.h),
+          SizedBox(width: 2.w),
+          Text(title, style: textTheme.bodyLarge),
         ],
       ),
     );
   }
 }
 
-// ✅ Date Selection Bottom Sheet
+class _CounterRow extends StatelessWidget {
+  final int value;
+  final VoidCallback onAdd;
+  final VoidCallback onRemove;
+  const _CounterRow(
+      {super.key,
+      required this.value,
+      required this.onAdd,
+      required this.onRemove});
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return Row(
+      children: [
+        IconButton(
+            onPressed: onRemove,
+            icon: Icon(Icons.remove_circle_outline, size: 3.h)),
+        Text("$value", style: textTheme.labelMedium),
+        IconButton(
+            onPressed: onAdd, icon: Icon(Icons.add_circle_outline, size: 3.h)),
+      ],
+    );
+  }
+}
+
 class DateSelectionBottomSheet {
   static void show(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-      ),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20.0))),
       builder: (context) {
         return Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(4.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                "Select Dates",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: AppColors.normaltext,
-                ),
-              ),
-              const SizedBox(height: 16.0),
+              Text("Select Dates",
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelMedium
+                      ?.copyWith(fontWeight: FontWeight.bold)),
+              SizedBox(height: 2.h),
               CalendarDatePicker2(
                 config: CalendarDatePicker2Config(
                   calendarType: CalendarDatePicker2Type.range,
@@ -486,24 +1260,17 @@ class DateSelectionBottomSheet {
                 value: [],
                 onValueChanged: (dates) {},
               ),
-              const SizedBox(height: 16.0),
+              SizedBox(height: 2.h),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary2,
-                  minimumSize: const Size(double.infinity, 52),
-                  
-                ),
                 onPressed: () {
                   Navigator.pop(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const PaymentDetailsPage(),
-                    ),
+                        builder: (context) => const PaymentDetailsPage()),
                   );
                 },
-                child: const Text("Continue to Payment" ,style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),),
-                     
+                child: const Text("Continue to Payment"),
               ),
             ],
           ),
