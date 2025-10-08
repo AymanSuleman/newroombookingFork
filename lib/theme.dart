@@ -96,7 +96,7 @@ class AppColors {
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: AppColors.background,
-    primaryColor: AppColors.primary,
+    primaryColor: AppColors.primary2,
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
       elevation: 1,
@@ -136,7 +136,7 @@ class AppTheme {
       ),
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      selectedItemColor: AppColors.primary,
+      selectedItemColor: AppColors.primary2,
       unselectedItemColor: AppColors.textLight,
       type: BottomNavigationBarType.fixed,
     ),
