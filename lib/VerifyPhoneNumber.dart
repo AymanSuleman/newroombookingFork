@@ -1,8 +1,5 @@
-
-
-//------------using sizer for reponsive------------------------------//
-
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:newroombooking/CreateAccountScreen.dart';
 import 'package:newroombooking/theme.dart';
 import 'package:sizer/sizer.dart';
@@ -18,6 +15,24 @@ class OtpVerifyScreen extends StatefulWidget {
 class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
   final List<TextEditingController> otpControllers =
       List.generate(6, (_) => TextEditingController());
+  bool isButtonEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    for (var controller in otpControllers) {
+      controller.addListener(_checkOtpFilled);
+    }
+  }
+
+  void _checkOtpFilled() {
+    bool allFilled = otpControllers.every((c) => c.text.trim().isNotEmpty);
+    if (allFilled != isButtonEnabled) {
+      setState(() {
+        isButtonEnabled = allFilled;
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -68,6 +83,29 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
     );
   }
 
+  void _verifyOtp() {
+    String otp = otpControllers.map((e) => e.text.trim()).join();
+
+    if (otp.length < 6) {
+      Fluttertoast.showToast(
+        msg: "Please enter the complete 6-digit OTP",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: AppColors.primary2,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return;
+    }
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const CreateAccountScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,18 +134,18 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
               ),
               SizedBox(height: 3.h),
               _buildOtpFields(),
-              // SizedBox(height: 3.h),
+              SizedBox(height: 3.h),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CreateAccountScreen(),
-                      ),
-                    );
-                  },
+                  onPressed: isButtonEnabled ? _verifyOtp : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        isButtonEnabled ? AppColors.primary2 : Colors.grey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                   child: const Text("Verify"),
                 ),
               ),

@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart'; // Add this package
 import 'package:newroombooking/VerifyPhoneNumber.dart';
 import 'package:newroombooking/theme.dart';
 
@@ -17,6 +17,39 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
   void dispose() {
     phoneController.dispose();
     super.dispose();
+  }
+
+  void _sendOtp() {
+    String phone = phoneController.text.trim();
+
+    if (phone.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Phone number cannot be empty",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: AppColors.primary2,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      return;
+    }
+
+    if (phone.length != 10 || !RegExp(r'^[0-9]+$').hasMatch(phone)) {
+      Fluttertoast.showToast(
+          msg: "Please enter a valid 10-digit phone number",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      return;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OtpVerifyScreen(phoneNumber: phone),
+      ),
+    );
   }
 
   @override
@@ -58,8 +91,10 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
               TextField(
                 controller: phoneController,
                 keyboardType: TextInputType.phone,
+                maxLength: 10, // Limit input to 10 digits
                 style: Theme.of(context).textTheme.bodyLarge,
                 decoration: InputDecoration(
+                  counterText: '', // Hide the default counter
                   hintText: "Enter your phone number",
                   hintStyle: Theme.of(context)
                       .textTheme
@@ -80,16 +115,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => OtpVerifyScreen(
-                          phoneNumber: phoneController.text,
-                        ),
-                      ),
-                    );
-                  },
+                  onPressed: _sendOtp, // Call validation method
                   style: ElevatedButton.styleFrom(
                     backgroundColor: primary,
                     shape: RoundedRectangleBorder(
@@ -114,18 +140,18 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                     children: [
                       TextSpan(
                         text: "Terms of Service",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(color: primary, fontWeight: FontWeight.w500, fontSize: 12),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: primary,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12),
                       ),
                       const TextSpan(text: " and "),
                       TextSpan(
                         text: "Privacy Policy",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(color: primary, fontWeight: FontWeight.w500, fontSize: 12),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: primary,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12),
                       ),
                     ],
                   ),
