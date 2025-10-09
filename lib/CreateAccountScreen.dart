@@ -694,7 +694,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:newroombooking/HotelBookingWelcome.dart';
+import 'package:newroombooking/location.dart';
 import 'package:newroombooking/theme.dart';
 import 'package:sizer/sizer.dart';
 
