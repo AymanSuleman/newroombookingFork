@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart'; // Add this package
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:newroombooking/VerifyPhoneNumber.dart';
 import 'package:newroombooking/theme.dart';
 
@@ -24,23 +24,23 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
 
     if (phone.isEmpty) {
       Fluttertoast.showToast(
-          msg: "Phone number cannot be empty",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: AppColors.primary2,
-          textColor: Colors.white,
-          fontSize: 16.0);
+        msg: "Phone number cannot be empty",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: AppColors.primary2,
+        textColor: Colors.white,
+      );
       return;
     }
 
     if (phone.length != 10 || !RegExp(r'^[0-9]+$').hasMatch(phone)) {
       Fluttertoast.showToast(
-          msg: "Please enter a valid 10-digit phone number",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+        msg: "Please enter a valid 10-digit phone number",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
       return;
     }
 
@@ -55,7 +55,6 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
   @override
   Widget build(BuildContext context) {
     final Color primary = AppColors.primary2;
-    final Color inputLight = Color(0xFFE2E8F0);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF6F7F8),
@@ -63,7 +62,6 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 40),
               Center(
@@ -88,38 +86,45 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                 ),
               ),
               const SizedBox(height: 40),
-              TextField(
-                controller: phoneController,
-                keyboardType: TextInputType.phone,
-                maxLength: 10, // Limit input to 10 digits
-                style: Theme.of(context).textTheme.bodyLarge,
-                decoration: InputDecoration(
-                  counterText: '', // Hide the default counter
-                  hintText: "Enter your phone number",
-                  hintStyle: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: AppColors.textLight),
-                  filled: true,
-                  fillColor: inputLight,
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
+
+              // Card container for input
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: TextField(
+                    controller: phoneController,
+                    keyboardType: TextInputType.phone,
+                    maxLength: 10,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    decoration: InputDecoration(
+                      counterText: '',
+                      hintText: "Enter your phone number",
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: AppColors.textLight),
+                      border: InputBorder.none,
+                      icon: Icon(Icons.phone, color: primary),
+                    ),
                   ),
                 ),
               ),
+
               const SizedBox(height: 32),
+
               SizedBox(
                 width: double.infinity,
-                height: 48,
+                height: 50,
                 child: ElevatedButton(
-                  onPressed: _sendOtp, // Call validation method
+                  onPressed: _sendOtp,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: primary,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                   ),
                   child: Text(
@@ -128,7 +133,9 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                   ),
                 ),
               ),
+
               const Spacer(),
+
               Center(
                 child: Text.rich(
                   TextSpan(
@@ -141,17 +148,13 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
                       TextSpan(
                         text: "Terms of Service",
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: primary,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12),
+                            color: primary, fontWeight: FontWeight.w500, fontSize: 12),
                       ),
                       const TextSpan(text: " and "),
                       TextSpan(
                         text: "Privacy Policy",
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: primary,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12),
+                            color: primary, fontWeight: FontWeight.w500, fontSize: 12),
                       ),
                     ],
                   ),

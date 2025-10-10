@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:newroombooking/CreateAccountScreen.dart';
 import 'package:newroombooking/theme.dart';
@@ -15,6 +16,7 @@ class OtpVerifyScreen extends StatefulWidget {
 class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
   final List<TextEditingController> otpControllers =
       List.generate(6, (_) => TextEditingController());
+  final List<FocusNode> focusNodes = List.generate(6, (_) => FocusNode());
   bool isButtonEnabled = false;
 
   @override
@@ -36,21 +38,48 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
 
   @override
   void dispose() {
-    for (var c in otpControllers) c.dispose();
+    for (var controller in otpControllers) {
+      controller.dispose();
+    }
+    for (var node in focusNodes) {
+      node.dispose();
+    }
     super.dispose();
+  }
+
+  void _verifyOtp() {
+    String otp = otpControllers.map((e) => e.text.trim()).join();
+    if (otp.length < 6) {
+      Fluttertoast.showToast(
+        msg: "Please enter the complete 6-digit OTP",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: AppColors.primary2,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return;
+    }
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const CreateAccountScreen(),
+      ),
+    );
   }
 
   Widget _buildOtpFields() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(
-        6,
-        (index) => Container(
+      children: List.generate(6, (index) {
+        return Container(
           margin: EdgeInsets.symmetric(horizontal: 1.w),
           width: 12.w,
           height: 14.h,
           child: TextField(
             controller: otpControllers[index],
+            focusNode: focusNodes[index],
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
             maxLength: 1,
@@ -72,37 +101,15 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                     const BorderSide(color: AppColors.primary2, width: 2),
               ),
             ),
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             onChanged: (val) {
               if (val.isNotEmpty && index < 5) {
-                FocusScope.of(context).nextFocus();
+                FocusScope.of(context).requestFocus(focusNodes[index + 1]);
               }
             },
           ),
-        ),
-      ),
-    );
-  }
-
-  void _verifyOtp() {
-    String otp = otpControllers.map((e) => e.text.trim()).join();
-
-    if (otp.length < 6) {
-      Fluttertoast.showToast(
-        msg: "Please enter the complete 6-digit OTP",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: AppColors.primary2,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-      return;
-    }
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const CreateAccountScreen(),
-      ),
+        );
+      }),
     );
   }
 
@@ -133,7 +140,23 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                 ),
               ),
               SizedBox(height: 3.h),
-              _buildOtpFields(),
+              // Wrap OTP fields with RawKeyboardListener for backspace
+              RawKeyboardListener(
+                focusNode: FocusNode(),
+                onKey: (event) {
+                  if (event is RawKeyDownEvent &&
+                      event.logicalKey == LogicalKeyboardKey.backspace) {
+                    for (int i = 5; i >= 0; i--) {
+                      if (otpControllers[i].text.isNotEmpty) {
+                        otpControllers[i].clear();
+                        FocusScope.of(context).requestFocus(focusNodes[i]);
+                        break;
+                      }
+                    }
+                  }
+                },
+                child: _buildOtpFields(),
+              ),
               SizedBox(height: 3.h),
               SizedBox(
                 width: double.infinity,
@@ -156,3 +179,4 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
     );
   }
 }
+

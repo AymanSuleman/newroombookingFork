@@ -31,7 +31,9 @@ class _MainScreenState extends State<MainScreen> {
       ),
       const FavoritesScreen(),
       const HistoryScreen(),
-      const ProfileScreen(),
+      // const ProfileScreen(),
+      const ProfilePage(),
+
     ];
   }
 
