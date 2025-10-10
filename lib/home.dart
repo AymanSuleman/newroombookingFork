@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:newroombooking/HistoryScreen.dart';
 import 'package:newroombooking/ProfileScreen.dart';
@@ -16,24 +15,17 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
-
   final TextEditingController _searchController = TextEditingController();
-
-  // Screens for bottom navigation
   late final List<Widget> _screens;
 
   @override
   void initState() {
     super.initState();
     _screens = [
-      HomeScreenBody(
-        searchController: _searchController,
-      ),
+      HomeScreenBody(searchController: _searchController),
       const FavoritesScreen(),
       const HistoryScreen(),
-      // const ProfileScreen(),
       const ProfilePage(),
-
     ];
   }
 
@@ -79,52 +71,78 @@ class _MainScreenState extends State<MainScreen> {
               ],
             )
           : null,
-      body: _screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: AppColors.primary2,
-        unselectedItemColor: Colors.grey,
-        backgroundColor: Colors.white,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: _buildNavIcon(Icons.home, 0),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: _buildNavIcon(Icons.favorite_border, 1),
-            label: "Favorite",
-          ),
-          BottomNavigationBarItem(
-            icon: _buildNavIcon(Icons.history, 2),
-            label: "History",
-          ),
-          BottomNavigationBarItem(
-            icon: _buildNavIcon(Icons.person, 3),
-            label: "Profile",
+      body: Stack(
+        children: [
+          _screens[_currentIndex],
+          Positioned(
+            left: 16,
+            right: 16,
+            bottom: 16,
+            child: PhysicalModel(
+              color: Colors.transparent,
+              elevation: 12,
+              shadowColor: Colors.black38,
+              borderRadius: BorderRadius.circular(30),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: Colors.white.withOpacity(0.95),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: BottomNavigationBar(
+                    currentIndex: _currentIndex,
+                    type: BottomNavigationBarType.fixed,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    selectedItemColor: AppColors.primary2,
+                    unselectedItemColor: Colors.grey,
+                    showSelectedLabels: true,
+                    showUnselectedLabels: true,
+                    selectedLabelStyle: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12),
+                    unselectedLabelStyle: const TextStyle(
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12),
+                    onTap: (index) {
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                    },
+                    items: [
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.home),
+                        label: "Home",
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.favorite),
+                        label: "Favorite",
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.history),
+                        label: "History",
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.person),
+                        label: "Profile",
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
-      ),
-    );
-  }
-
-  /// Custom builder for nav icons
-  Widget _buildNavIcon(IconData icon, int index) {
-    final bool isSelected = _currentIndex == index;
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: isSelected ? AppColors.primary2 : Colors.transparent,
-        shape: BoxShape.circle,
-      ),
-      child: Icon(
-        icon,
-        color: isSelected ? Colors.white : Colors.grey,
       ),
     );
   }
@@ -141,7 +159,6 @@ class HomeScreenBody extends StatefulWidget {
 }
 
 class _HomeScreenBodyState extends State<HomeScreenBody> {
-  // All hotels with categories
   final List<Map<String, dynamic>> hotels = [
     {
       "title": "The Grand Majestic",
@@ -168,7 +185,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
       "rating": "4.7",
       "category": "Vacation Rentals",
       "image":
-          "https://lh3.googleusercontent.com/aida-public/AB6AXuAFlwVEipjMGkvA6rtt47HJtlF9ECWHfx2fu4rqzxP9eBgtY3PJmg2fJe39XNBAJQCbKg8BUyHCGdh6GzQ-Yh7YB5-aahTtiZguY3oChPv_jiaB-E4ZTNLC8a2VRoKuCBNMeHeL6912EYi1jamchCrXKSc1fOhjK2vEjbqmRvGE17LR0HRGsFI1WW2MtftRNSNoXvFFhrDWoqg44q7ngCseZfsFLdr5x97qKwanf6e6M1JEeqf12DUwOwiJfLlOkDzjh5q8wzBmHI0",
+          "https://lh3.googleusercontent.com/aida-public/AB6AXuAbceWUbt2SiWY9wIMC8JTqHG-BzLs2uiKEDYikVS7BZX5BkdOh3Nrh2CzSud-CKFlh9VTS73c3XYVcdpd7jLlQtQeb2FrSHctwyRLO3U1kMC2ZCWObx4CxOOmajsKsOGsvF7M6ch9qOW-yAPcBFSMPElmF2B9svy1Ger3IAR3HN42agbywHRY6KXRQYYTbBn8kMrRHpgoP1ymyUfwmForxsHskrSfKWzwOE9haybSOMmIu4sQiSOcN88_2A0irITGZMup-7nAZKO4",
     },
     {
       "title": "Tranquil Villa Escapes",
@@ -207,8 +224,12 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
       filteredHotels = hotels
           .where((hotel) =>
               (category == "All" || hotel["category"] == category) &&
-              (hotel["title"].toLowerCase().contains(widget.searchController.text.toLowerCase()) ||
-                  hotel["subtitle"].toLowerCase().contains(widget.searchController.text.toLowerCase())))
+              (hotel["title"]
+                      .toLowerCase()
+                      .contains(widget.searchController.text.toLowerCase()) ||
+                  hotel["subtitle"]
+                      .toLowerCase()
+                      .contains(widget.searchController.text.toLowerCase())))
           .toList();
     });
   }
@@ -239,7 +260,6 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                 style: AppTheme.lightTheme.textTheme.bodyLarge,
               ),
             ),
-
             // Categories
             SizedBox(
               height: 50,
@@ -280,14 +300,14 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                 ],
               ),
             ),
-
-            // Hotels list with animated switcher
+            // Hotels list
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 500),
               switchInCurve: Curves.easeOut,
               switchOutCurve: Curves.easeIn,
               child: ListView.builder(
-                key: ValueKey<String>("${selectedCategory}-${widget.searchController.text}"),
+                key: ValueKey<String>(
+                    "${selectedCategory}-${widget.searchController.text}"),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.all(16),
@@ -327,7 +347,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
 
 // ---------------- Hotel Card ---------------- //
 
-class HotelCard extends StatelessWidget {
+class HotelCard extends StatefulWidget {
   final String title;
   final String subtitle;
   final String price;
@@ -344,6 +364,13 @@ class HotelCard extends StatelessWidget {
   });
 
   @override
+  State<HotelCard> createState() => _HotelCardState();
+}
+
+class _HotelCardState extends State<HotelCard> {
+  bool isFavorite = false; // <-- move state here
+
+  @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -351,13 +378,13 @@ class HotelCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Image with favorite button
           Stack(
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(16)),
                 child: Image.network(
-                  image,
+                  widget.image,
                   height: 150,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -367,13 +394,20 @@ class HotelCard extends StatelessWidget {
                 top: 8,
                 right: 8,
                 child: IconButton(
-                  icon: const Icon(Icons.favorite_border, color: Colors.white),
-                  onPressed: () {},
+                  icon: Icon(
+                    isFavorite ? Icons.favorite : Icons.favorite_border,
+                    color: isFavorite ? Colors.red : Colors.white,
+                    size: 28,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isFavorite = !isFavorite;
+                    });
+                  },
                 ),
               ),
             ],
           ),
-          // Details
           Padding(
             padding: const EdgeInsets.all(12),
             child: Column(
@@ -384,7 +418,7 @@ class HotelCard extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        title,
+                        widget.title,
                         style: AppTheme.lightTheme.textTheme.labelSmall!
                             .copyWith(fontWeight: FontWeight.bold),
                         overflow: TextOverflow.ellipsis,
@@ -393,18 +427,20 @@ class HotelCard extends StatelessWidget {
                     Row(
                       children: [
                         const Icon(Icons.star, size: 16, color: Colors.amber),
-                        Text(rating, style: AppTheme.lightTheme.textTheme.bodyMedium),
+                        Text(widget.rating,
+                            style: AppTheme.lightTheme.textTheme.bodyMedium),
                       ],
                     ),
                   ],
                 ),
                 const SizedBox(height: 4),
-                Text(subtitle, style: AppTheme.lightTheme.textTheme.bodyMedium),
+                Text(widget.subtitle,
+                    style: AppTheme.lightTheme.textTheme.bodyMedium),
                 const SizedBox(height: 6),
                 Text(
-                  price,
-                  style: AppTheme.lightTheme.textTheme.bodyLarge!
-                      .copyWith(fontWeight: FontWeight.bold , color: AppColors.primary2),
+                  widget.price,
+                  style: AppTheme.lightTheme.textTheme.bodyLarge!.copyWith(
+                      fontWeight: FontWeight.bold, color: AppColors.primary2),
                 ),
               ],
             ),

@@ -39,6 +39,8 @@ dependencies:
   fluttertoast: ^8.0.9
   geolocator: ^14.0.2
   google_maps_flutter: ^2.13.1
+  animated_bottom_navigation_bar: ^0.3.0
+  flutter_animate: ^3.0.0
 
 dev_dependencies:
   flutter_test:
