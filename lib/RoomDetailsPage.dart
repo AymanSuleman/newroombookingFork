@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:newroombooking/PaymentDetailsPage.dart';
 import 'package:newroombooking/theme.dart';
@@ -326,8 +324,12 @@ class _CounterRow extends StatelessWidget {
   }
 }
 
+
+
 class DateSelectionBottomSheet {
   static void show(BuildContext context) {
+    List<DateTime?> selectedDates = [];
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -339,43 +341,124 @@ class DateSelectionBottomSheet {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text("Select Dates",
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelMedium
-                      ?.copyWith(fontWeight: FontWeight.bold)),
+              Text(
+                "Select Dates",
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
               SizedBox(height: 2.h),
               CalendarDatePicker2(
                 config: CalendarDatePicker2Config(
                   calendarType: CalendarDatePicker2Type.range,
+                  selectedDayHighlightColor:
+                      AppColors.primary2, // selected date
+                  weekdayLabelTextStyle: TextStyle(
+                    color: Colors.grey.shade700,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  controlsTextStyle: TextStyle(
+                    color: AppColors.primary2,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  dayTextStyle: TextStyle(
+                    color: Colors.black87,
+                  ),
                 ),
-                value: [],
-                onValueChanged: (dates) {},
+                value: selectedDates,
+                onValueChanged: (dates) {
+                  selectedDates = dates;
+                },
               ),
               SizedBox(height: 2.h),
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.symmetric(horizontal: 4.w),
                 child: SizedBox(
                   width: double.infinity,
-                  height: 50,
-                
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PaymentDetailsPage()),
-                    );
-                  },
-                  style: AppTheme.lightTheme.elevatedButtonTheme.style,
-                  child: Text(
-                    "Continue to Payment",
-                    style: AppTheme.lightTheme.textTheme.labelLarge,
+                  height: 6.h,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (selectedDates.length < 2 ||
+                          selectedDates[0] == null ||
+                          selectedDates[1] == null) {
+                        // Custom styled error dialog
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16)),
+                              elevation: 10,
+                              child: Container(
+                                padding: EdgeInsets.all(4.w),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(Icons.error_outline,
+                                        color: Colors.red, size: 6.h),
+                                    SizedBox(height: 2.h),
+                                    Text(
+                                      "Oops!",
+                                      style: AppTheme
+                                          .lightTheme.textTheme.titleMedium
+                                          ?.copyWith(
+                                              fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(height: 1.h),
+                                    Text(
+                                      "Please select the second date",
+                                      textAlign: TextAlign.center,
+                                      style: AppTheme
+                                          .lightTheme.textTheme.bodyMedium,
+                                    ),
+                                    SizedBox(height: 3.h),
+                                    SizedBox(
+                                      width: double.infinity,
+                                      height: 6.h,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: AppColors.primary2,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                        ),
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(),
+                                        child: Text(
+                                          "OK",
+                                          style: AppTheme
+                                              .lightTheme.textTheme.labelLarge
+                                              ?.copyWith(color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      } else {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PaymentDetailsPage()),
+                        );
+                      }
+                    },
+                    style: AppTheme.lightTheme.elevatedButtonTheme.style,
+                    child: Text(
+                      "Continue to Payment",
+                      style: AppTheme.lightTheme.textTheme.labelLarge,
+                    ),
                   ),
                 ),
               ),
-          ),],
+              SizedBox(height: 2.h),
+            ],
           ),
         );
       },
